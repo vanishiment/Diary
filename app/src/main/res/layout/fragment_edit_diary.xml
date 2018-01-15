@@ -1,0 +1,71 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.plant.diary.ui.editdiary.EditDiaryFragment"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="16dp"
+      android:orientation="vertical"
+      android:focusable="true"
+      android:focusableInTouchMode="true" >
+
+    <com.plant.diary.ui.widget.EditImageLayout
+        android:id="@+id/fragment_edit_edit_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        />
+
+    <TextView
+        android:id="@+id/fragment_edit_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="WED.JANUARY 10/2018"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/fragment_edit_diary_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:hint="今天"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        style="@style/TextAppearance.AppCompat.Title"
+        >
+    </EditText>
+
+    <TextView
+        android:id="@+id/fragment_edit_diary_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@null"
+        android:gravity="center"
+        android:text="天气"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/fragment_edit_diary_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="1.5"
+        android:text="@string/long_string"
+        android:textSize="16sp"
+        />
+
+  </LinearLayout>
+
+</ScrollView>

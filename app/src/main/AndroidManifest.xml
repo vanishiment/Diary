@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.plant.diary">
+
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+  <application
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme"
+      android:name=".ui.DiaryApp">
+    <activity
+        android:name=".ui.maindiarys.main.MainActivity"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name="com.zhihu.matisse.ui.MatisseActivity" />
+    <activity android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity" />
+    <activity android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity" />
+
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="com.zhihu.matisse.sample.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths_public" />
+    </provider>
+
+    <activity
+        android:name=".ui.monthdiary.MonthDiaryActivity"
+        android:label="@string/title_activity_month_diary"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".ui.detaildiary.DetailDiaryActivity"
+        android:label="@string/title_activity_detail_diary"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".ui.editdiary.EditDiaryActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".ui.searchdiary.SearchDiaryActivity"
+        android:label="@string/title_activity_search_diary"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".ui.settings.SettingActivity"
+        android:label="@string/title_activity_setting"
+        android:theme="@style/AppTheme.NoActionBar"/>
+  </application>
+
+</manifest>

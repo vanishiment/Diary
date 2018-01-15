@@ -1,0 +1,35 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.monthdiary.MonthDiaryActivity"
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/AppTheme.AppBarOverlay"
+      >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/month_diary_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"/>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <fragment
+      android:name="com.plant.diary.ui.monthdiary.MonthDiaryFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout="@layout/fragment_month_diary"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      android:id="@+id/month_diary_fragment"
+      />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,13 +1,18 @@
 package com.plant.diary.ui.maindiarys.card;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.plant.diary.data.model.MonthCover;
 import com.plant.diary.data.repo.MonthCoverAndDiaryRepo;
 import com.plant.diary.ui.compat.SchedulerProvider;
-import com.plant.diary.utils.DateUtil;
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 public class CardPresenter implements CardContract.Presenter {
 
@@ -48,11 +53,32 @@ public class CardPresenter implements CardContract.Presenter {
 
   @Override public void queryMonthCover(int year, int month) {
     if (mDisposableQuery != null) mCompositeDisposable.delete(mDisposableQuery);
-    mDisposableQuery = mRepo.getMonthCover(year, month)
+    mDisposableQuery = Flowable.create((FlowableOnSubscribe<MonthCover>) emitter -> {
+      MonthCover monthCover =  mRepo.getMonthCover(year, month);
+      if (monthCover != null && monthCover.getYear() > 0){
+        emitter.onNext(monthCover);
+      }else {
+        emitter.onComplete();
+      }
+    },BackpressureStrategy.LATEST)
         .subscribeOn(mSchedulerProvider.io())
         .observeOn(mSchedulerProvider.ui())
-        .subscribe(mView::updateMonthCover
+        .subscribe(new Consumer<MonthCover>() {
+                     @Override public void accept(MonthCover monthCover) throws Exception {
+                       mView.updateMonthCover(monthCover);
+                     }
+                   }, new Consumer<Throwable>() {
+                     @Override public void accept(Throwable throwable) throws Exception {
+
+                     }
+                   }, new Action() {
+                     @Override public void run() throws Exception {
+                      mView.resetMonthCover();
+                     }
+                   }
+
         );
+
     mCompositeDisposable.add(mDisposableQuery);
   }
 
@@ -80,17 +106,25 @@ public class CardPresenter implements CardContract.Presenter {
 
   @Override public void insertOrUpdateMonthCover(int year, int month,MonthCover monthCover) {
     if (mDisposableInsertOrUpdate != null) mCompositeDisposable.delete(mDisposableInsertOrUpdate);
-    mDisposableInsertOrUpdate = mRepo.getMonthCover(year, month)
+
+    mDisposableInsertOrUpdate = Flowable.create((FlowableOnSubscribe<MonthCover>) emitter -> {
+      MonthCover monthCover1 = mRepo.getMonthCover(year, month);
+      if (monthCover1 != null && monthCover1.getYear() > 0){
+        mRepo.updateMonthCover(monthCover);
+      }else {
+        mRepo.insertMonthCover(monthCover);
+      }
+      emitter.onNext(monthCover);
+    }, BackpressureStrategy.LATEST)
         .subscribeOn(mSchedulerProvider.io())
         .observeOn(mSchedulerProvider.ui())
-        .subscribe(
-            monthCover1 -> {
-              mRepo.updateMonthCover(monthCover);
-            },
-            throwable -> {
-              mRepo.insertMonthCover(monthCover);
-            }
-        );
+        .subscribe(monthCover12 -> {
+
+        }, throwable -> {
+
+        }, () -> {
+
+        });
     mCompositeDisposable.add(mDisposableInsertOrUpdate);
   }
 }

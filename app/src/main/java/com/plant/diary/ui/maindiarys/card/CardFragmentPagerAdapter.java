@@ -52,4 +52,9 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
     return fragment;
   }
 
+  public void updateYear(int year){
+    for (CardFragment f : mCardFragmentList) {
+      f.setYear(year);
+    }
+  }
 }

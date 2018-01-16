@@ -9,7 +9,7 @@ public interface MonthCoverDataSource {
 
   Flowable<List<MonthCover>> getYearMonthCoverList(@IntRange(from = 1978, to = 2048) int year);
 
-  Flowable<MonthCover> getMonthCover(@IntRange(from = 1978, to = 2048) int year,
+  MonthCover getMonthCover(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month);
 
   void insertMonthCover(MonthCover monthCover);

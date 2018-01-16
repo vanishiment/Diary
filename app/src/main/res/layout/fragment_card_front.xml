@@ -24,7 +24,6 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/beauty7"
         />
 
     <TextView
@@ -34,7 +33,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="1"
         android:textColor="#FFFFFF"
         android:textSize="32sp"
         />
@@ -45,7 +43,6 @@
         android:layout_below="@id/card_front_month_number_tv"
         android:layout_marginLeft="8dp"
         android:gravity="center_horizontal"
-        android:text="JAN"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         />
@@ -74,7 +71,7 @@
         android:layout_toLeftOf="@id/card_front_more_ibtn"
         style="@style/AppTheme.ProgressBarStyle"
         android:max="32"
-        android:progress="1"/>
+        android:progress="0"/>
 
     <TextView
         android:id="@+id/card_front_pb_tv"
@@ -83,7 +80,6 @@
         android:layout_above="@id/card_front_pb"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
-        android:text="1/32"
         android:textColor="#FFFFFF"
         />
 

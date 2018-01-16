@@ -50,7 +50,7 @@ public class RemoteMonthCoverAndDiaryDataSource implements MonthCoverDataSource,
     return null;
   }
 
-  @Override public Flowable<MonthCover> getMonthCover(int year, int month) {
+  @Override public MonthCover getMonthCover(int year, int month) {
     return null;
   }
 

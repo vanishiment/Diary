@@ -21,6 +21,10 @@ public interface MonthCoverDao {
   Flowable<MonthCover> getMonthCover(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month);
 
+  @Query("select * from month_cover_table where year = :year and month = :month limit 1")
+  MonthCover getMonthCoverTest(@IntRange(from = 1978, to = 2048) int year,
+      @IntRange(from = 1, to = 12) int month);
+
   @Insert(onConflict = OnConflictStrategy.REPLACE) void insertMonthCover(MonthCover monthCover);
 
   @Update(onConflict = OnConflictStrategy.REPLACE) void updateMonthCover(MonthCover monthCover);

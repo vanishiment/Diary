@@ -1,22 +1,16 @@
 package com.plant.diary.ui.maindiarys.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
-import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 import com.plant.diary.R;
 import com.plant.diary.data.model.MonthCover;
 import com.plant.diary.ui.base.BaseFragment;
@@ -53,35 +47,18 @@ public class MainFragment extends BaseFragment implements MainContract.View{
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.action_filter:
-        showYearFilter(item.getActionView());
+      case R.id.pop_menu_2017:
+        setYear(2017);
+        return true;
+      case R.id.pop_menu_2018:
+        setYear(2018);
+        return true;
+      case R.id.pop_menu_2019:
+        setYear(2019);
         return true;
       default:
         return super.onOptionsItemSelected(item);
     }
-  }
-
-  private void showYearFilter(View view){
-    //PopupMenu popupMenu = new PopupMenu(getContext(),view);
-    //popupMenu.getMenuInflater().inflate(R.menu.menu_pop_fragment_main,popupMenu.getMenu());
-    //popupMenu.setOnMenuItemClickListener(item -> {
-    //  switch (item.getItemId()){
-    //    case R.id.pop_menu_2017:
-    //      setYear(2017);
-    //      popupMenu.dismiss();
-    //      break;
-    //    case R.id.pop_menu_2018:
-    //      setYear(2018);
-    //      popupMenu.dismiss();
-    //      break;
-    //    case R.id.pop_menu_2019:
-    //      setYear(2019);
-    //      popupMenu.dismiss();
-    //      break;
-    //  }
-    //  return false;
-    //});
-    //popupMenu.show();
   }
 
   @Override public void onResume() {
@@ -108,6 +85,7 @@ public class MainFragment extends BaseFragment implements MainContract.View{
 
   @Override public void setYear(int year) {
     mPresenter.queryMonthCovers(year);
+    mAdapter.updateYear(year);
   }
 
   @Override public void showCards(List<MonthCover> monthCovers) {

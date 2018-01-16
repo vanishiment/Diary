@@ -63,8 +63,8 @@ public class LocalMonthCoverAndDiaryDataSource implements MonthCoverDataSource, 
     return mMonthCoverDao.getMonthCoverListByYear(year);
   }
 
-  @Override public Flowable<MonthCover> getMonthCover(int year, int month) {
-    return mMonthCoverDao.getMonthCover(year, month);
+  @Override public MonthCover getMonthCover(int year, int month) {
+    return mMonthCoverDao.getMonthCoverTest(year, month);
   }
 
   @Override public void insertMonthCover(MonthCover monthCover) {

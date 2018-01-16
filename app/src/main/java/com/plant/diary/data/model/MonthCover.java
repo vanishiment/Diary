@@ -68,4 +68,21 @@ public class MonthCover {
   public void setDiaryCount(int diaryCount) {
     this.diaryCount = diaryCount;
   }
+
+  @Override public String toString() {
+    return "MonthCover{"
+        + "year="
+        + year
+        + ", month="
+        + month
+        + ", color='"
+        + color
+        + '\''
+        + ", coverPicUrl='"
+        + coverPicUrl
+        + '\''
+        + ", diaryCount="
+        + diaryCount
+        + '}';
+  }
 }

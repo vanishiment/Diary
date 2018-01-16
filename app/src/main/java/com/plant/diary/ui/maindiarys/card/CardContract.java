@@ -10,6 +10,8 @@ public interface CardContract {
 
     void updateMonthCover(MonthCover monthCover);
 
+    void resetMonthCover();
+
     void setMonthTv(String month);
 
     void setCardBackground(boolean pic, String background);

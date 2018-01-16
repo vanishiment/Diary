@@ -41,6 +41,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -61,6 +62,8 @@ public class CardFragment extends BaseFragment implements CardContract.View{
   @BindView(R.id.card_front_pb) ProgressBar mPb;
   @BindView(R.id.card_front_more_ibtn) ImageView mMore;
 
+  BottomSheetDialog dialog;
+
   private CardContract.Presenter mPresenter;
 
   public CardFragment() {
@@ -73,6 +76,11 @@ public class CardFragment extends BaseFragment implements CardContract.View{
     args.putInt(MONTH, month);
     fragment.setArguments(args);
     return fragment;
+  }
+
+  public void setYear(int year) {
+    mYear = year;
+    mPresenter.queryMonthCover(mYear,mMonth);
   }
 
   @Override public void setPresenter(CardContract.Presenter presenter) {
@@ -92,13 +100,25 @@ public class CardFragment extends BaseFragment implements CardContract.View{
     if (month != mMonth) return;
 
     if (!TextUtils.isEmpty(color) && !color.equals("0")) setCardBackground(false,color);
-    if (!TextUtils.isEmpty(pic)) setCardBackground(true,color);
+    if (!TextUtils.isEmpty(pic)) setCardBackground(true,pic);
 
     int monthOfDays = DateUtil.getMonthDays(year,month-1,1);
     String diaryProgress = diaryCount + "/" + monthOfDays;
     mPb.setMax(monthOfDays);
     setMonthProgress(diaryCount);
     setMonthProgressTv(diaryProgress);
+
+  }
+
+  @Override public void resetMonthCover() {
+    if (getUserVisibleHint()){
+      mMonthText.setText(String.valueOf(mMonth));
+      mMonthNum.setText(getMonthText(mMonth));
+      mBackground.setImageDrawable(
+          getActivity().getResources().getDrawable(R.drawable.month_item_background));
+      mPbText.setText(String.format(Locale.getDefault(),"0/%d", DateUtil.getMonthDays(mYear, mMonth-1, 1)));
+      mPb.setProgress(0);
+    }
 
   }
 
@@ -110,8 +130,9 @@ public class CardFragment extends BaseFragment implements CardContract.View{
 
   @Override public void setCardBackground(boolean pic, String background) {
     if (pic && !TextUtils.isEmpty(background)){
-      Glide.with(this).load(background).into(mBackground);
-    }else {
+      Uri uri = Uri.parse(background);
+      Glide.with(this).load(uri).into(mBackground);
+    }else if (!pic && !TextUtils.isEmpty(background)){
       mBackground.setImageDrawable(new ColorDrawable(Integer.parseInt(background)));
     }
   }
@@ -126,7 +147,7 @@ public class CardFragment extends BaseFragment implements CardContract.View{
   }
 
   @Override public void showMoreBottomSheetDialog() {
-    final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+     dialog = new BottomSheetDialog(getActivity());
     View dialogView =
         getActivity().getLayoutInflater().inflate(R.layout.bottom_sheet_dialog_layout_card, null);
     Button cancelBtn = dialogView.findViewById(R.id.bottom_sheet_cancel);
@@ -196,6 +217,8 @@ public class CardFragment extends BaseFragment implements CardContract.View{
     mMonthNum.setText(getMonthText(mMonth));
     mBackground.setImageDrawable(
         getActivity().getResources().getDrawable(R.drawable.month_item_background));
+    mPbText.setText(String.format(Locale.getDefault(),"0/%d", DateUtil.getMonthDays(mYear, mMonth-1, 1)));
+    mPb.setProgress(0);
     return root;
   }
 
@@ -223,8 +246,11 @@ public class CardFragment extends BaseFragment implements CardContract.View{
     if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
       List<Uri> uris = Matisse.obtainResult(data);
       if (uris != null && uris.size() > 0) {
-        Glide.with(CardFragment.this).load(uris.get(0)).into(mBackground);
-        mPresenter.insertOrUpdateMonthCover(mYear,mMonth,new MonthCover(mYear,mMonth,null,uris.get(0).toString(),0));
+        Uri uri = uris.get(0);
+        String url = uri.toString();
+        Glide.with(CardFragment.this).load(uri).into(mBackground);
+        mPresenter.insertOrUpdateMonthCover(mYear,mMonth,new MonthCover(mYear,mMonth,null,url,0));
+        if (dialog != null && dialog.isShowing()) dialog.dismiss();
       }
     }
   }

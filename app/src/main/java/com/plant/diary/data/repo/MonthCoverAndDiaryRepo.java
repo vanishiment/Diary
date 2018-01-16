@@ -63,7 +63,7 @@ public class MonthCoverAndDiaryRepo implements MonthCoverDataSource, DiaryDataSo
     return mLocal.getYearMonthCoverList(year);
   }
 
-  @Override public Flowable<MonthCover> getMonthCover(int year, int month) {
+  @Override public MonthCover getMonthCover(int year, int month) {
     return mLocal.getMonthCover(year, month);
   }
 

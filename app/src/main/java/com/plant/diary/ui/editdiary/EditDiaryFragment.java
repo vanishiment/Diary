@@ -9,6 +9,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,10 +27,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.plant.diary.R;
+import com.plant.diary.data.model.Diary;
 import com.plant.diary.support.GlideEngineOverride;
 import com.plant.diary.ui.base.BaseFragment;
 import com.plant.diary.ui.widget.EditImageLayout;
@@ -38,11 +42,12 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
 public class EditDiaryFragment extends BaseFragment
-    implements EditImageLayout.OnEditImageLayoutClickListener {
+    implements EditImageLayout.OnEditImageLayoutClickListener,EditDiaryContract.View {
 
   private static final int REQUEST_CODE_CHOOSE = 1000;
 
@@ -51,6 +56,10 @@ public class EditDiaryFragment extends BaseFragment
   @BindView(R.id.fragment_edit_diary_title) EditText mTitle;
   @BindView(R.id.fragment_edit_diary_weather) TextView mWeather;
   @BindView(R.id.fragment_edit_diary_content) EditText mContent;
+
+  private EditDiaryContract.Presenter mPresenter;
+
+  private Diary mCurDiary = new Diary();
 
   public EditDiaryFragment() {
     // Required empty public constructor
@@ -84,6 +93,8 @@ public class EditDiaryFragment extends BaseFragment
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case android.R.id.home:
+        return true;
       case R.id.menu_edit_done:
         return true;
       default:
@@ -147,6 +158,56 @@ public class EditDiaryFragment extends BaseFragment
         });
       }
     }
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mPresenter.subscribe();
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+    mPresenter.unSubscribe();
+  }
+
+  @Override public void setPresenter(EditDiaryContract.Presenter presenter) {
+    mPresenter = presenter;
+  }
+
+  @Override public void showCloseEditDiaryDialog() {
+    new MaterialDialog.Builder(getActivity()).title("请注意")
+        .content("你有正在编辑的内容，确认丢弃吗？")
+        .positiveText("保存")
+        .negativeText("丢弃")
+        .onPositive((dialog, which) -> {
+
+        })
+        .build();
+  }
+
+  @Override public void showDiary(Diary diary) {
+    String topImgUrl = diary.getPic();
+    String title = diary.getTitle();
+    //String weather = diary.getWeather();
+    String content = diary.getContent();
+    int year = diary.getYear();
+    int month = diary.getMonth();
+    int week = diary.getWeek();
+
+    if (!TextUtils.isEmpty(topImgUrl)) Glide.with(this).load(topImgUrl).into(new SimpleTarget<Drawable>() {
+      @Override
+      public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+        mEditImg.setImageDrawable(resource);
+      }
+    });
+
+    if (!TextUtils.isEmpty(title)) mTitle.setText(title);
+    if (!TextUtils.isEmpty(content)) mContent.setText(content);
+    mDate.setText(String.format(Locale.getDefault(),"%d %d/%d", week, month, year));
+  }
+
+  @Override public void showDoneDialog() {
+
   }
 
   private static class BottomSheetRVAdapter extends RecyclerView.Adapter<BottomSheetRVAdapter.VH> {

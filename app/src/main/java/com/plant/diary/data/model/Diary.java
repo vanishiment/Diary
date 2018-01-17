@@ -39,7 +39,7 @@ public class Diary {
   private String mPic;
 
   @Ignore
-  Diary() {
+  public Diary() {
   }
 
   public Diary(@NonNull String id, int year, int month,int week, int day, String title, String weather,

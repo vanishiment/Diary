@@ -2,7 +2,7 @@ package com.plant.diary.ui.maindiarys.main;
 
 import android.support.annotation.NonNull;
 import com.plant.diary.data.model.MonthCover;
-import com.plant.diary.data.repo.MonthCoverAndDiaryRepo;
+import com.plant.diary.data.repo.MonthCoverRepo;
 import com.plant.diary.ui.compat.BaseSchedulerProvider;
 import com.plant.diary.utils.DateUtil;
 import io.reactivex.disposables.CompositeDisposable;
@@ -12,7 +12,7 @@ import java.util.List;
 public class MainPresenter implements MainContract.Presenter {
 
   @NonNull
-  private final MonthCoverAndDiaryRepo mRepo;
+  private final MonthCoverRepo mRepo;
 
   @NonNull
   private final MainContract.View mView;
@@ -22,7 +22,7 @@ public class MainPresenter implements MainContract.Presenter {
 
   private CompositeDisposable mCompositeDisposable;
 
-  MainPresenter(@NonNull MonthCoverAndDiaryRepo repo, @NonNull MainContract.View view,
+  MainPresenter(@NonNull MonthCoverRepo repo, @NonNull MainContract.View view,
       @NonNull BaseSchedulerProvider schedulerProvider) {
     mRepo = repo;
     mView = view;

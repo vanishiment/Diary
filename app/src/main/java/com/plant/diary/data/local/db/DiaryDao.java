@@ -18,7 +18,7 @@ import java.util.List;
       @IntRange(from = 1, to = 12) int month);
 
   @Query("select * from diary_table where year = :year and month = :month and day = :day limit 1")
-  Flowable<Diary> getDiaryListByDay(@IntRange(from = 1978, to = 2048) int year,
+  Flowable<List<Diary>> getDiaryListByDay(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int day);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)

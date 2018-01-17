@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.ViewGroup;
-import com.plant.diary.data.repo.MonthCoverAndDiaryRepo;
+import com.plant.diary.data.repo.MonthCoverRepo;
 import com.plant.diary.ui.compat.SchedulerProvider;
 import com.plant.diary.ui.widget.viewpagercard.CardAdapter;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
     mBaseElevation = baseElevation;
     for (int i = 1; i <= 12; i++) {
       CardFragment cardFragment = CardFragment.newInstance(i);
-      new CardPresenter(MonthCoverAndDiaryRepo.get(context), cardFragment,
+      new CardPresenter(MonthCoverRepo.getRepo(context), cardFragment,
           SchedulerProvider.get());
       mCardFragmentList.add(cardFragment);
     }

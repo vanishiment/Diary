@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,9 @@ public class MainFragment extends BaseFragment implements MainContract.View{
   MainContract.Presenter mPresenter;
   private CardFragmentPagerAdapter mAdapter;
 
+  private int mYear;
+  private MenuItem mFilterMenu;
+
   public MainFragment() {
   }
 
@@ -42,19 +46,32 @@ public class MainFragment extends BaseFragment implements MainContract.View{
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.menu_main_fragment,menu);
+    mFilterMenu = menu.findItem(R.id.action_filter);
     //super.onCreateOptionsMenu(menu, inflater);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.pop_menu_2017:
-        setYear(2017);
+        if (mYear != 2017){
+          setYear(2017);
+          mYear = 2017;
+          mFilterMenu.setTitle("2017");
+        }
         return true;
       case R.id.pop_menu_2018:
-        setYear(2018);
+        if (mYear != 2018){
+          setYear(2018);
+          mYear = 2018;
+          mFilterMenu.setTitle("2018");
+        }
         return true;
       case R.id.pop_menu_2019:
-        setYear(2019);
+        if (mYear != 2019){
+          setYear(2019);
+          mYear = 2019;
+          mFilterMenu.setTitle("2019");
+        }
         return true;
       default:
         return super.onOptionsItemSelected(item);

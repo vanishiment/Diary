@@ -20,8 +20,11 @@ public class Diary {
   @ColumnInfo(name = "month")
   private int mMonth;
 
+  @ColumnInfo(name = "week")
+  private int mWeek;
+
   @ColumnInfo(name = "day")
-  private String mDay;
+  private int mDay;
 
   @ColumnInfo(name = "title")
   private String mTitle;
@@ -39,11 +42,12 @@ public class Diary {
   Diary() {
   }
 
-  public Diary(@NonNull String id, int year, int month, String day, String title, String weather,
+  public Diary(@NonNull String id, int year, int month,int week, int day, String title, String weather,
       String content, String pic) {
     mId = id;
     mYear = year;
     mMonth = month;
+    mWeek = week;
     mDay = day;
     mTitle = title;
     mWeather = weather;
@@ -70,7 +74,7 @@ public class Diary {
       return this;
     }
 
-    public Builder day(String day){
+    public Builder day(int day){
       diary.setDay(day);
       return this;
     }
@@ -124,11 +128,19 @@ public class Diary {
     mMonth = month;
   }
 
-  public String getDay() {
+  public int getWeek() {
+    return mWeek;
+  }
+
+  public void setWeek(int week) {
+    mWeek = week;
+  }
+
+  public int getDay() {
     return mDay;
   }
 
-  public void setDay(String day) {
+  public void setDay(int day) {
     mDay = day;
   }
 

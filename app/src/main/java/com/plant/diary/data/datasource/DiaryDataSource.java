@@ -10,7 +10,7 @@ public interface DiaryDataSource {
   Flowable<List<Diary>> getMonthDiaryList(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month);
 
-  Flowable<Diary> getDayDiary(@IntRange(from = 1978, to = 2048) int year,
+  Flowable<List<Diary>> getDayDiary(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int day);
 
   void insertDiary(Diary diary);

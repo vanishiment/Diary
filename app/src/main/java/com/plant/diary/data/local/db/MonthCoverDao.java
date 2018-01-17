@@ -18,7 +18,7 @@ public interface MonthCoverDao {
   Flowable<List<MonthCover>> getMonthCoverListByYear(@IntRange(from = 1978, to = 2048) int year);
 
   @Query("select * from month_cover_table where year = :year and month = :month limit 1")
-  Flowable<MonthCover> getMonthCover(@IntRange(from = 1978, to = 2048) int year,
+  Flowable<List<MonthCover>> getMonthCover(@IntRange(from = 1978, to = 2048) int year,
       @IntRange(from = 1, to = 12) int month);
 
   @Query("select * from month_cover_table where year = :year and month = :month limit 1")

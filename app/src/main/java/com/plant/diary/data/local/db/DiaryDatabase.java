@@ -11,7 +11,7 @@ import com.plant.diary.data.model.MonthCover;
 public abstract class DiaryDatabase extends RoomDatabase {
 
   private static final String DB_NAME = "diary.db";
-  private static DiaryDatabase sIns;
+  private static volatile DiaryDatabase sIns;
 
   public abstract DiaryDao diaryDao();
 

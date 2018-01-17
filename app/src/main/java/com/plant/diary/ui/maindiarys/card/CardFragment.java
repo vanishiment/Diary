@@ -33,6 +33,7 @@ import com.plant.diary.support.GlideEngineOverride;
 import com.plant.diary.support.permission.MPermission;
 import com.plant.diary.support.permission.callback.PermissionCallback;
 import com.plant.diary.ui.base.BaseFragment;
+import com.plant.diary.ui.constants.Constant;
 import com.plant.diary.ui.monthdiary.MonthDiaryActivity;
 import com.plant.diary.utils.DateUtil;
 import com.plant.diary.utils.Util;
@@ -51,7 +52,9 @@ public class CardFragment extends BaseFragment implements CardContract.View{
 
   private static final int REQUEST_CODE_CHOOSE = 1000;
 
-  private int mYear;
+  private boolean mIsDestroy = true;
+
+  private int mYear = -1;
   private int mMonth;
 
   @BindView(R.id.card_front_card_view) CardView mCardView;
@@ -88,6 +91,7 @@ public class CardFragment extends BaseFragment implements CardContract.View{
   }
 
   public void updateMonthCover(MonthCover monthCover){
+    if (mIsDestroy) return;
     int year = monthCover.getYear();
     int month = monthCover.getMonth();
     String color = monthCover.getColor();
@@ -111,7 +115,7 @@ public class CardFragment extends BaseFragment implements CardContract.View{
   }
 
   @Override public void resetMonthCover() {
-    if (getUserVisibleHint()){
+    if (!mIsDestroy){
       mMonthText.setText(String.valueOf(mMonth));
       mMonthNum.setText(getMonthText(mMonth));
       mBackground.setImageDrawable(
@@ -210,7 +214,9 @@ public class CardFragment extends BaseFragment implements CardContract.View{
 
   @Override public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    mYear = DateUtil.getCurYear();
+    if (mYear == -1){
+      mYear = DateUtil.getCurYear();
+    }
     View root = inflater.inflate(R.layout.fragment_card_front, container, false);
     ButterKnife.bind(this, root);
     mMonthText.setText(String.valueOf(mMonth));
@@ -226,15 +232,20 @@ public class CardFragment extends BaseFragment implements CardContract.View{
     super.onResume();
     mPresenter.subscribe();
     mPresenter.queryMonthCover(mYear,mMonth);
+    mIsDestroy = false;
   }
 
   @Override public void onDestroyView() {
     super.onDestroyView();
     mPresenter.unSubscribe();
+    mIsDestroy = true;
   }
 
   @OnClick(R.id.card_front_card_view) public void onCardViewClick(View view) {
-    getActivity().startActivity(new Intent(getActivity(), MonthDiaryActivity.class));
+    Intent intent = new Intent(getActivity(), MonthDiaryActivity.class);
+    intent.putExtra(Constant.MONTH_COVER_YEAR,mYear);
+    intent.putExtra(Constant.MONTH_COVER_MONTH,mMonth);
+    getActivity().startActivity(intent);
   }
 
   @OnClick(R.id.card_front_more_ibtn) public void onClick(View view) {

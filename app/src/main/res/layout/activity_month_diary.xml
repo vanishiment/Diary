@@ -23,11 +23,9 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <fragment
-      android:name="com.plant.diary.ui.monthdiary.MonthDiaryFragment"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:layout="@layout/fragment_month_diary"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       android:id="@+id/month_diary_fragment"
       />

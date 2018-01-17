@@ -10,14 +10,13 @@ public class DbTest {
 
   DiaryDatabase mDb;
 
-  @Before
-  public void initDb(){
-    mDb = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),DiaryDatabase.class).build();
+  @Before public void initDb() {
+    mDb = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), DiaryDatabase.class)
+        .allowMainThreadQueries()
+        .build();
   }
 
-  @After
-  public void closeDb(){
+  @After public void closeDb() {
     mDb.close();
   }
-
 }

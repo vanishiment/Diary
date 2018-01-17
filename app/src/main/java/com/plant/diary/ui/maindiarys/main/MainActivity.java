@@ -7,11 +7,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import com.plant.diary.R;
-import com.plant.diary.data.repo.MonthCoverAndDiaryRepo;
+import com.plant.diary.data.repo.MonthCoverRepo;
 import com.plant.diary.ui.base.BaseActivity;
-import com.plant.diary.ui.compat.BaseSchedulerProvider;
 import com.plant.diary.ui.compat.SchedulerProvider;
 import com.plant.diary.ui.compat.StatusBarCompat;
 import com.plant.diary.ui.editdiary.EditDiaryActivity;
@@ -44,7 +42,7 @@ public class MainActivity extends BaseActivity {
       mainFragment = new MainFragment();
       ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),mainFragment,R.id.content_frame);
     }
-    new MainPresenter(MonthCoverAndDiaryRepo.get(this),mainFragment, SchedulerProvider.get());
+    new MainPresenter(MonthCoverRepo.getRepo(this),mainFragment, SchedulerProvider.get());
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {

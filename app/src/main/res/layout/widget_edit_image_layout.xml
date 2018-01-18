@@ -10,6 +10,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:contentDescription="@null"
+      android:scaleType="centerCrop"
       android:background="@color/widget_edit_img_bg"/>
   <ImageButton
       android:id="@+id/widget_edit_image_add_ib"

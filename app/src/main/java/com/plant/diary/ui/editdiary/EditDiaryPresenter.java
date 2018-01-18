@@ -1,26 +1,29 @@
 package com.plant.diary.ui.editdiary;
 
+import android.text.TextUtils;
 import com.plant.diary.data.model.Diary;
+import com.plant.diary.data.model.MonthCover;
 import com.plant.diary.data.repo.DiaryRepo;
+import com.plant.diary.data.repo.MonthCoverRepo;
 import com.plant.diary.ui.compat.SchedulerProvider;
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class EditDiaryPresenter implements EditDiaryContract.Presenter {
 
   private final DiaryRepo mRepo;
+  private final MonthCoverRepo mCoverRepo;
   private final EditDiaryContract.View mView;
   private final SchedulerProvider mProvider;
 
   private CompositeDisposable mCompositeDisposable;
-  private Disposable mQuery,mInsert,mUpdate,mDelete;
+  private Disposable mQuery,mInsert,mUpdate,mDelete,mDisposable;
 
-  public EditDiaryPresenter(DiaryRepo repo, EditDiaryContract.View view,
+  public EditDiaryPresenter(DiaryRepo repo,MonthCoverRepo coverRepo, EditDiaryContract.View view,
       SchedulerProvider provider) {
     mRepo = repo;
+    mCoverRepo = coverRepo;
     mView = view;
     mProvider = provider;
     mCompositeDisposable = new CompositeDisposable();
@@ -50,50 +53,66 @@ public class EditDiaryPresenter implements EditDiaryContract.Presenter {
   }
 
   @Override public void insertDiary(Diary diary) {
-    Flowable.create((FlowableOnSubscribe<String>) emitter -> {
-      mRepo.insertDiary(diary);
-      emitter.onComplete();
-    }, BackpressureStrategy.LATEST)
+    mInsert = mCoverRepo.getMonthCover(diary.getYear(),diary.getMonth())
         .subscribeOn(mProvider.io())
-        .observeOn(mProvider.ui())
-        .doOnComplete(() -> {
-
-        });
+        .observeOn(mProvider.io())
+        .subscribe(
+            monthCovers -> {
+              MonthCover cover;
+              if (monthCovers.isEmpty()) {
+                cover = new MonthCover(diary.getYear(), diary.getMonth(), "", "", 1);
+                mCoverRepo.insertMonthCover(cover);
+              } else {
+                cover = monthCovers.get(0);
+                cover.setDiaryCount(cover.getDiaryCount() + 1);
+                mCoverRepo.updateMonthCover(cover);
+              }
+              mRepo.insertDiary(diary);
+            }
+        );
     mCompositeDisposable.add(mInsert);
   }
 
   @Override public void updateDiary(Diary diary) {
-    Flowable.create((FlowableOnSubscribe<String>) emitter -> {
-      mRepo.updateDiary(diary);
-      emitter.onComplete();
-    }, BackpressureStrategy.LATEST)
+    mUpdate = Flowable.just("1")
         .subscribeOn(mProvider.io())
-        .observeOn(mProvider.ui())
-        .doOnComplete(() -> {
-
+        .observeOn(mProvider.io())
+        .subscribe(s -> {
+          mRepo.updateDiary(diary);
         });
     mCompositeDisposable.add(mUpdate);
   }
 
   @Override public void deleteDiary(Diary diary) {
-    Flowable.create((FlowableOnSubscribe<String>) emitter -> {
-      mRepo.deleteDiary(diary);
-      emitter.onComplete();
-    }, BackpressureStrategy.LATEST)
+    mDelete = Flowable.just("1")
         .subscribeOn(mProvider.io())
-        .observeOn(mProvider.ui())
-        .doOnComplete(() -> {
-
+        .observeOn(mProvider.io())
+        .subscribe(s -> {
+          mRepo.deleteDiary(diary);
         });
     mCompositeDisposable.add(mDelete);
   }
 
   public void insertOrUpdateDiary(Diary diary){
-
+    if (!rightDiary(diary)){
+      return;
+    }
+    mDisposable = mRepo.getDayDiary(diary.getYear(),diary.getMonth(),diary.getDay())
+        .subscribeOn(mProvider.io())
+        .observeOn(mProvider.io())
+        .subscribe(diaryList -> {
+          if (diaryList.isEmpty()){
+            mRepo.insertDiary(diary);
+          }else {
+            mRepo.updateDiary(diary);
+          }
+        });
+    mCompositeDisposable.add(mDisposable);
   }
 
-  private boolean rightDiary(Diary diary){
-    return false;
+  public boolean rightDiary(Diary diary) {
+    return diary != null && (!TextUtils.isEmpty(diary.getTitle()) || !TextUtils.isEmpty(
+        diary.getContent()) || !TextUtils.isEmpty(diary.getPic()));
   }
 
 }

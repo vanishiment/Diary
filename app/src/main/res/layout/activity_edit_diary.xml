@@ -37,13 +37,11 @@
     </android.support.design.widget.CollapsingToolbarLayout>
   </android.support.design.widget.AppBarLayout>
 
-  <fragment
+  <FrameLayout
       android:id="@+id/fragment_edit_diary"
-      android:name="com.plant.diary.ui.editdiary.EditDiaryFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      tools:layout="@layout/fragment_edit_diary"
       />
 
 

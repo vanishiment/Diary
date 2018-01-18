@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string-array name="list_date">
+    <item>2017/2/18</item>
+    <item>2018/1/18</item>
+    <item>2019/3/18</item>
+    <item>2018/1/19</item>
+  </string-array>
+
+</resources>

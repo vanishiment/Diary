@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.PreferenceManager;
 import com.facebook.stetho.Stetho;
+import timber.log.Timber;
 
 public class DiaryApp extends Application {
 
@@ -12,6 +13,7 @@ public class DiaryApp extends Application {
     super.onCreate();
     Stetho.initializeWithDefaults(this);
     applyNightModel();
+    Timber.plant(new Timber.DebugTree());
   }
 
 

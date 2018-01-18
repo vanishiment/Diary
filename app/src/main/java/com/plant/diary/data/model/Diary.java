@@ -3,16 +3,9 @@ package com.plant.diary.data.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
-@Entity(tableName = "diary_table")
+@Entity(tableName = "diary_table",primaryKeys = {"year","month","day"})
 public class Diary {
-
-  @NonNull
-  @PrimaryKey
-  @ColumnInfo(name = "diary_id")
-  private String mId;
 
   @ColumnInfo(name = "year")
   private int mYear;
@@ -42,9 +35,8 @@ public class Diary {
   public Diary() {
   }
 
-  public Diary(@NonNull String id, int year, int month,int week, int day, String title, String weather,
+  public Diary(int year, int month,int week, int day, String title, String weather,
       String content, String pic) {
-    mId = id;
     mYear = year;
     mMonth = month;
     mWeek = week;
@@ -58,11 +50,6 @@ public class Diary {
   public static final class Builder{
 
     private final Diary diary = new Diary();
-
-    public Builder id(String id){
-      diary.setId(id);
-      return this;
-    }
 
     public Builder year(int year){
       diary.setYear(year);
@@ -102,14 +89,6 @@ public class Diary {
     public Diary build(){
       return diary;
     }
-  }
-
-  @NonNull public String getId() {
-    return mId;
-  }
-
-  public void setId(@NonNull String id) {
-    mId = id;
   }
 
   public int getYear() {

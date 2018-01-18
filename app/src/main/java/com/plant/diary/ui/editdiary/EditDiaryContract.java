@@ -14,6 +14,8 @@ public interface EditDiaryContract {
 
     void showDoneDialog();
 
+    void showErrorTipDialog(String errorMsg);
+
   }
 
   interface Presenter extends BasePresenter{

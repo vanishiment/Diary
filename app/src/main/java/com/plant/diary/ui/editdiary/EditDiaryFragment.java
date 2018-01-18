@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,6 +39,8 @@ import com.bumptech.glide.request.transition.Transition;
 import com.plant.diary.R;
 import com.plant.diary.data.model.Diary;
 import com.plant.diary.support.GlideEngineOverride;
+import com.plant.diary.support.permission.MPermission;
+import com.plant.diary.support.permission.callback.PermissionCallback;
 import com.plant.diary.ui.base.BaseFragment;
 import com.plant.diary.ui.widget.EditImageLayout;
 import com.zhihu.matisse.Matisse;
@@ -43,6 +49,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -60,6 +67,13 @@ public class EditDiaryFragment extends BaseFragment
   private EditDiaryContract.Presenter mPresenter;
 
   private Diary mCurDiary = new Diary();
+
+  public void setDate(int year,int month,int day){
+    Timber.tag("edit_fra").e("date %s %s %s",year,month,day);
+    mCurDiary.setYear(year);
+    mCurDiary.setMonth(month);
+    mCurDiary.setDay(day);
+  }
 
   public EditDiaryFragment() {
     // Required empty public constructor
@@ -85,6 +99,38 @@ public class EditDiaryFragment extends BaseFragment
 
   private void setupViews() {
     mEditImg.setOnEditImageLayoutClickListener(this);
+    mTitle.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+        String title = s.toString();
+        if (!TextUtils.isEmpty(title)){
+          mCurDiary.setTitle(title);
+        }
+      }
+    });
+    mContent.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+        String content = s.toString();
+        if (!TextUtils.isEmpty(content)){
+          mCurDiary.setContent(content);
+        }
+      }
+    });
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -94,8 +140,10 @@ public class EditDiaryFragment extends BaseFragment
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
+        showCloseEditDiaryDialog();
         return true;
       case R.id.menu_edit_done:
+        showDoneDialog();
         return true;
       default:
         return super.onOptionsItemSelected(item);
@@ -103,16 +151,25 @@ public class EditDiaryFragment extends BaseFragment
   }
 
   @Override public void onAddClick(View view) {
-    Matisse.from(EditDiaryFragment.this)
-        .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
-        .countable(true)
-        .capture(true)
-        .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
-        .maxSelectable(1)
-        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        .thumbnailScale(0.85F)
-        .imageEngine(new GlideEngineOverride())
-        .forResult(REQUEST_CODE_CHOOSE);
+    MPermission.getInstance().request(this, new PermissionCallback() {
+      @Override public void onGranted() {
+        Matisse.from(EditDiaryFragment.this)
+            .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+            .countable(true)
+            .capture(true)
+            .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
+            .maxSelectable(1)
+            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            .thumbnailScale(0.85F)
+            .imageEngine(new GlideEngineOverride())
+            .forResult(REQUEST_CODE_CHOOSE);
+      }
+
+      @Override public void onDenied(List<String> perms) {
+
+      }
+    }, new String[] { "android.permission.WRITE_EXTERNAL_STORAGE" });
+
   }
 
   @Override public void onDeleteClick(View view) {
@@ -154,6 +211,7 @@ public class EditDiaryFragment extends BaseFragment
           @Override
           public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
             mEditImg.setImageDrawable(resource);
+            mCurDiary.setPic(uris.get(0).toString());
           }
         });
       }
@@ -163,6 +221,7 @@ public class EditDiaryFragment extends BaseFragment
   @Override public void onResume() {
     super.onResume();
     mPresenter.subscribe();
+    mPresenter.getDiary(mCurDiary.getYear(),mCurDiary.getMonth(),mCurDiary.getDay());
   }
 
   @Override public void onPause() {
@@ -179,10 +238,23 @@ public class EditDiaryFragment extends BaseFragment
         .content("你有正在编辑的内容，确认丢弃吗？")
         .positiveText("保存")
         .negativeText("丢弃")
-        .onPositive((dialog, which) -> {
-
+        .onNegative((dialog, which) -> {
+          dialog.dismiss();
+          getActivity().finish();
         })
-        .build();
+        .onPositive((dialog, which) -> {
+          if (mPresenter != null && mPresenter instanceof EditDiaryPresenter){
+            EditDiaryPresenter presenter = (EditDiaryPresenter) mPresenter;
+            if (presenter.rightDiary(mCurDiary)){
+              presenter.insertOrUpdateDiary(mCurDiary);
+              getActivity().finish();
+            }else {
+              showErrorTipDialog("必须输入内容才能保存");
+            }
+          }
+        })
+        .build()
+    .show();
   }
 
   @Override public void showDiary(Diary diary) {
@@ -193,21 +265,45 @@ public class EditDiaryFragment extends BaseFragment
     int year = diary.getYear();
     int month = diary.getMonth();
     int week = diary.getWeek();
+    mCurDiary.setYear(year);
+    mCurDiary.setMonth(month);
+    mCurDiary.setWeek(week);
+    mCurDiary.setDay(diary.getDay());
 
     if (!TextUtils.isEmpty(topImgUrl)) Glide.with(this).load(topImgUrl).into(new SimpleTarget<Drawable>() {
       @Override
       public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
         mEditImg.setImageDrawable(resource);
+        mCurDiary.setPic(topImgUrl);
       }
     });
 
-    if (!TextUtils.isEmpty(title)) mTitle.setText(title);
-    if (!TextUtils.isEmpty(content)) mContent.setText(content);
+    if (!TextUtils.isEmpty(title)){
+      mTitle.setText(title);
+      mCurDiary.setTitle(title);
+    }
+    if (!TextUtils.isEmpty(content)){
+      mContent.setText(content);
+      mCurDiary.setContent(content);
+    }
     mDate.setText(String.format(Locale.getDefault(),"%d %d/%d", week, month, year));
   }
 
   @Override public void showDoneDialog() {
+    if (mPresenter != null && mPresenter instanceof EditDiaryPresenter){
+      EditDiaryPresenter presenter = (EditDiaryPresenter) mPresenter;
+      if (presenter.rightDiary(mCurDiary)){
+        presenter.insertOrUpdateDiary(mCurDiary);
+        getActivity().finish();
+      }else {
+        showErrorTipDialog("必须输入内容才能保存");
+      }
+    }
+  }
 
+  @Override public void showErrorTipDialog(String errorMsg) {
+    //Toast.makeText(getActivity(), ""+errorMsg, Toast.LENGTH_SHORT).show();
+    Snackbar.make(mTitle, ""+errorMsg, Toast.LENGTH_SHORT).show();
   }
 
   private static class BottomSheetRVAdapter extends RecyclerView.Adapter<BottomSheetRVAdapter.VH> {

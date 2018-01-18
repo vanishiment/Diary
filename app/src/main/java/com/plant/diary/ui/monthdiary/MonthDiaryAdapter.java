@@ -35,7 +35,8 @@ public class MonthDiaryAdapter extends RecyclerView.Adapter<MonthDiaryAdapter.VH
   @Override public void onBindViewHolder(VH holder, int position) {
     Diary diary = mDays.get(position);
     holder.day.setText(String.valueOf(diary.getDay()));
-    holder.week.setText("Sun");
+    //int week = diary.getWeek();
+    holder.week.setText("");
     if (!TextUtils.isEmpty(diary.getPic()))
     Glide.with(holder.background.getContext()).load(diary.getPic()).into(holder.background);
     holder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +55,9 @@ public class MonthDiaryAdapter extends RecyclerView.Adapter<MonthDiaryAdapter.VH
   }
 
   void replaceData(List<Diary> diaryList){
+    mDays.clear();
     mDays.addAll(diaryList);
+    notifyDataSetChanged();
   }
 
   static class VH extends RecyclerView.ViewHolder{

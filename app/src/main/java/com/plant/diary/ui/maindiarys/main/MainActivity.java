@@ -59,16 +59,18 @@ public class MainActivity extends BaseActivity {
     new MaterialDialog.Builder(this)
         .title("选择要编辑的日期")
         .items(R.array.list_date)
-        .itemsCallbackSingleChoice(1, new MaterialDialog.ListCallbackSingleChoice() {
+        .alwaysCallSingleChoiceCallback()
+        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
           @Override public boolean onSelection(MaterialDialog dialog, View itemView, int which,
               CharSequence text) {
+            Log.e("main_act","which: " + which + " text: " + text);
             String[] strings = text.toString().split("/");
             year = Integer.parseInt(strings[0]);
             month = Integer.parseInt(strings[1]);
             day = Integer.parseInt(strings[2]);
             Timber.tag("main_act").e("date %s %s %s",year,month,day);
             Log.e("main_act","year " + year + " month " + month + " day " + day);
-            return false;
+            return true;
           }
         })
         .negativeText("取消")
@@ -76,9 +78,9 @@ public class MainActivity extends BaseActivity {
         .onNegative((dialog1, which) -> dialog1.dismiss())
         .onPositive((dialog12, which) -> {
           Intent intent = new Intent(MainActivity.this, EditDiaryActivity.class);
-          intent.putExtra(Constant.MONTH_COVER_YEAR,2018);
-          intent.putExtra(Constant.MONTH_COVER_MONTH,1);
-          intent.putExtra(Constant.MONTH_COVER_DAY,18);
+          intent.putExtra(Constant.MONTH_COVER_YEAR,year);
+          intent.putExtra(Constant.MONTH_COVER_MONTH,month);
+          intent.putExtra(Constant.MONTH_COVER_DAY,day);
           MainActivity.this.startActivity(intent);
         }).build().show();
 

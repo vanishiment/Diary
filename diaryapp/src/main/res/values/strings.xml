@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DiaryApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="confirm">OK</string>
+    <string name="switch_theme">切换主题</string>
+    <string name="theme_picker">主题选择</string>
+</resources>

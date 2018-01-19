@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TintNavigationView">
+        <attr name="itemTextColor" />
+        <attr name="itemIconTint" />
+    </declare-styleable>
+
+</resources>

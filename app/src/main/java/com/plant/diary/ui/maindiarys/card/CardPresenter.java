@@ -1,7 +1,9 @@
 package com.plant.diary.ui.maindiarys.card;
 
 import android.support.annotation.NonNull;
+import com.plant.diary.data.model.Diary;
 import com.plant.diary.data.model.MonthCover;
+import com.plant.diary.data.repo.DiaryRepo;
 import com.plant.diary.data.repo.MonthCoverRepo;
 import com.plant.diary.ui.compat.SchedulerProvider;
 import io.reactivex.BackpressureStrategy;
@@ -10,6 +12,7 @@ import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import java.util.List;
 import org.reactivestreams.Publisher;
@@ -18,6 +21,9 @@ public class CardPresenter implements CardContract.Presenter {
 
   @NonNull
   private final MonthCoverRepo mRepo;
+
+  @NonNull
+  private final DiaryRepo mDiaryRepo;
 
   @NonNull
   private final CardContract.View mView;
@@ -30,9 +36,10 @@ public class CardPresenter implements CardContract.Presenter {
 
   private Disposable mDisposableInsert,mDisposableUpdate,mDisposableQuery,mDisposableInsertOrUpdate;
 
-  CardPresenter(@NonNull MonthCoverRepo repo, @NonNull CardContract.View view,
+  CardPresenter(@NonNull MonthCoverRepo repo, @NonNull DiaryRepo diaryRepo,@NonNull CardContract.View view,
       @NonNull SchedulerProvider schedulerProvider) {
     mRepo = repo;
+    mDiaryRepo = diaryRepo;
     mView = view;
     mSchedulerProvider = schedulerProvider;
     mView.setPresenter(this);
@@ -53,25 +60,25 @@ public class CardPresenter implements CardContract.Presenter {
 
   @Override public void queryMonthCover(int year, int month) {
     if (mDisposableQuery != null) mCompositeDisposable.delete(mDisposableQuery);
-    mDisposableQuery = mRepo.getMonthCover(year, month)
+    Flowable<List<Diary>> diary = mDiaryRepo.getMonthDiaryList(year, month);
+    Flowable<List<MonthCover>> monthCover = mRepo.getMonthCover(year, month);
+    mDisposableQuery = Flowable.zip(diary, monthCover, (diaryList, monthCovers) -> {
+      if (monthCovers.isEmpty()) {
+        return new MonthCover(year, month, "", "", diaryList.size());
+      } else {
+        MonthCover mc = monthCovers.get(0);
+        mc.setDiaryCount(diaryList.size());
+        return mc;
+      }
+    })
         .subscribeOn(mSchedulerProvider.io())
         .observeOn(mSchedulerProvider.ui())
-        .subscribe(
-            // onNext
-            monthCovers -> {
-            if (!monthCovers.isEmpty()){
-              mView.updateMonthCover(monthCovers.get(0));
-            }else {
-              mView.resetMonthCover();
-            }
-        },
-            // onError
-            throwable -> {
-
-        },
-            // onComplete
-            () -> {
-
+        .subscribe(monthCover1 -> {
+          if (monthCover1.getYear() == 1 && monthCover1.getMonth() == 1) {
+            mView.resetMonthCover();
+          } else {
+            mView.updateMonthCover(monthCover1);
+          }
         });
 
     mCompositeDisposable.add(mDisposableQuery);

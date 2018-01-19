@@ -53,23 +53,12 @@ public class EditDiaryPresenter implements EditDiaryContract.Presenter {
   }
 
   @Override public void insertDiary(Diary diary) {
-    mInsert = mCoverRepo.getMonthCover(diary.getYear(),diary.getMonth())
+    mInsert = Flowable.just("1")
         .subscribeOn(mProvider.io())
         .observeOn(mProvider.io())
-        .subscribe(
-            monthCovers -> {
-              MonthCover cover;
-              if (monthCovers.isEmpty()) {
-                cover = new MonthCover(diary.getYear(), diary.getMonth(), "", "", 1);
-                mCoverRepo.insertMonthCover(cover);
-              } else {
-                cover = monthCovers.get(0);
-                cover.setDiaryCount(cover.getDiaryCount() + 1);
-                mCoverRepo.updateMonthCover(cover);
-              }
-              mRepo.insertDiary(diary);
-            }
-        );
+        .subscribe(s -> {
+          mRepo.insertDiary(diary);
+        });
     mCompositeDisposable.add(mInsert);
   }
 

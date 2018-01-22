@@ -1,4 +1,4 @@
-package com.plant.diaryapp;
+package com.plant.diaryapp.app;
 
 
 import android.app.Application;
@@ -7,6 +7,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.plant.diaryapp.app.theme.ThemeHelper;
+import com.plant.diaryapp.app.theme.ThemeUtil;
 
 public class DiaryApp extends Application implements ThemeUtils.switchColor {
 

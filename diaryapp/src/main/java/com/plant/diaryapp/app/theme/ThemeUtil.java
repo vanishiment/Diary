@@ -1,8 +1,10 @@
-package com.plant.diaryapp;
+package com.plant.diaryapp.app.theme;
 
 
 import android.content.Context;
 import android.support.annotation.ColorRes;
+
+import com.plant.diaryapp.R;
 
 public class ThemeUtil {
 

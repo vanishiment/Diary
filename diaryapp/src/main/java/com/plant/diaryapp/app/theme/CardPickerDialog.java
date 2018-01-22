@@ -1,4 +1,4 @@
-package com.plant.diaryapp;
+package com.plant.diaryapp.app.theme;
 
 
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.plant.diaryapp.R;
 
 public class CardPickerDialog extends DialogFragment implements View.OnClickListener {
     public static final String TAG = "CardPickerDialog";

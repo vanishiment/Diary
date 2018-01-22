@@ -1,4 +1,4 @@
-package com.plant.diaryapp;
+package com.plant.diaryapp.utils;
 
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.plant.diaryapp;
+package com.plant.diaryapp.ui;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,10 +22,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.plant.diaryapp.R;
+import com.plant.diaryapp.app.theme.CardPickerDialog;
+import com.plant.diaryapp.app.theme.ThemeHelper;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CardPickerDialog.ClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CardPickerDialog.ClickListener,BaseLazyFragment.OnUpdateListener {
 
     FloatingActionButton fab;
+    NoScrollViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        navigationView.setItemIconTintList(ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.selector_accent_select));
-//        navigationView.setItemTextColor(ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.selector_accent_select));
+        setNavigationStyle(navigationView);
+        navigationView.setCheckedItem(R.id.nav_time_line);
+
+        mViewPager = findViewById(R.id.main_fra_vp_container);
+        mViewPager.setEnableScroll(false);
+        mViewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
     }
 
     @Override
@@ -104,20 +113,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        if (id == R.id.nav_time_line) {
+            mViewPager.setCurrentItem(0,false);
+        } else if (id == R.id.nav_diary) {
+            mViewPager.setCurrentItem(1,false);
+        } else if (id == R.id.nav_text) {
+            mViewPager.setCurrentItem(2,false);
+        } else if (id == R.id.nav_photo) {
+            mViewPager.setCurrentItem(3,false);
+        } else if (id == R.id.nav_video) {
+            mViewPager.setCurrentItem(4,false);
+        } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else {
 
         }
 
@@ -151,18 +162,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 FloatingActionButton actionButton = (FloatingActionButton) view;
                                 actionButton.setBackgroundTintList(ThemeUtils.getThemeColorStateList(view.getContext(), R.color.selector_primary_click));
                             } else if (view instanceof NavigationView) {
-                                Log.e("----------", "refreshSpecificView: ");
                                 NavigationView navigationView = (NavigationView) view;
-                                int[][] states = new int[][]{
-                                        new int[]{-android.R.attr.state_checked},
-                                        new int[]{android.R.attr.state_checked}
-                                };
-
-                                int[] colors = new int[]{getResources().getColor(R.color.text_primary_color),
-                                        ThemeUtils.getColorById(MainActivity.this, R.color.theme_color_primary)};
-                                ColorStateList csl = new ColorStateList(states, colors);
-                                navigationView.setItemTextColor(csl);
-                                navigationView.setItemIconTintList(csl);
+                                setNavigationStyle(navigationView);
                             }
                         }
                     }
@@ -170,4 +171,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void setNavigationStyle(NavigationView navigationView) {
+        int[][] states = new int[][]{
+                new int[]{-android.R.attr.state_checked},
+                new int[]{android.R.attr.state_checked}
+        };
+
+        int[] colors = new int[]{getResources().getColor(R.color.text_primary_color),
+                ThemeUtils.getColorById(MainActivity.this, R.color.theme_color_primary)};
+        ColorStateList csl = new ColorStateList(states, colors);
+        navigationView.setItemTextColor(csl);
+        navigationView.setItemIconTintList(csl);
+    }
+
+    @Override
+    public void onUpdate(String title) {
+        Log.e("main_activity", "onUpdate: " + title );
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setTitle(title);
+        }
+    }
 }

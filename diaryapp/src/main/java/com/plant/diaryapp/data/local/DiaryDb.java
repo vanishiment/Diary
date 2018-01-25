@@ -11,7 +11,7 @@ import com.plant.diaryapp.data.model.DiaryBook;
 @Database(entities = {Diary.class, DiaryBook.class},version = 1,exportSchema = false)
 public abstract class DiaryDb extends RoomDatabase{
 
-    private static final String DB_NAME = "diary_app.db";
+    private static final java.lang.String DB_NAME = "diary_app.db";
 
     private static volatile DiaryDb sDb;
 

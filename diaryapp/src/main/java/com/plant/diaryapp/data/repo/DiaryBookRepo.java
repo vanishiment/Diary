@@ -6,8 +6,6 @@ import com.plant.diaryapp.data.local.LocalDiaryBookDataSource;
 import com.plant.diaryapp.data.model.DiaryBook;
 import com.plant.diaryapp.data.remote.RemoteDiaryDataSource;
 
-import java.util.List;
-
 public class DiaryBookRepo implements DiaryBookDataSource{
 
     private static DiaryBookRepo mRepo;
@@ -52,12 +50,12 @@ public class DiaryBookRepo implements DiaryBookDataSource{
     }
 
     @Override
-    public void updateDiaryBookColor(int year, int month, String color) {
+    public void updateDiaryBookColor(int year, int month, java.lang.String color) {
         mLocal.updateDiaryBookColor(year, month, color);
     }
 
     @Override
-    public void updateDiaryBookPic(int year, int month, String pic) {
+    public void updateDiaryBookPic(int year, int month, java.lang.String pic) {
         mLocal.updateDiaryBookPic(year, month, pic);
     }
 

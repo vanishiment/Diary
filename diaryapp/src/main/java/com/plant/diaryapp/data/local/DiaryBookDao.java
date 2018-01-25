@@ -17,7 +17,7 @@ public interface DiaryBookDao {
     List<DiaryBook> getYearDiaryBook(int year);
 
     @Query("select * from diary_book_table where year = :year and month = :month")
-    DiaryBook getMonthDiaryBook(int year,int month);
+    DiaryBook getMonthDiaryBook(int year, int month);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDiaryBook(DiaryBook diaryBook);
@@ -26,10 +26,10 @@ public interface DiaryBookDao {
     void updateDiaryBook(DiaryBook diaryBook);
 
     @Query("update diary_book_table set color = :color where year = :year and month = :month")
-    void updateDiaryBookColor(int year,int month,String color);
+    void updateDiaryBookColor(int year, int month, java.lang.String color);
 
     @Query("update diary_book_table set cover_pic_url = :pic where year = :year and month = :month")
-    void updateDiaryBookPic(int year,int month,String pic);
+    void updateDiaryBookPic(int year, int month, java.lang.String pic);
 
     @Query("update diary_book_table set diary_count = :diaryCount where year = :year and month = :month")
     void updateDiaryBookDiaryCount(int year,int month,int diaryCount);

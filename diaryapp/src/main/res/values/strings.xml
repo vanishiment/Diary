@@ -21,6 +21,9 @@
     <string name="nav_setting">设置</string>
     <string name="nav_share">分享</string>
 
+    <string name="state_empty">没有更多的数据</string>
+    <string name="state_error">错误，点击重试</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

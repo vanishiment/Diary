@@ -76,7 +76,7 @@ public class LocalDiaryBookDataSource implements DiaryBookDataSource {
     }
 
     @Override
-    public void updateDiaryBookColor(int year, int month, String color) {
+    public void updateDiaryBookColor(int year, int month, java.lang.String color) {
         mAppExecutors.diskIO().execute(() -> {
             mDiaryBookDao.updateDiaryBookColor(year, month, color);
         });
@@ -84,7 +84,7 @@ public class LocalDiaryBookDataSource implements DiaryBookDataSource {
     }
 
     @Override
-    public void updateDiaryBookPic(int year, int month, String pic) {
+    public void updateDiaryBookPic(int year, int month, java.lang.String pic) {
         mAppExecutors.diskIO().execute(() -> {
             mDiaryBookDao.updateDiaryBookPic(year, month, pic);
         });

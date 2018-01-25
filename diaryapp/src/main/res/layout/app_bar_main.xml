@@ -5,8 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.plant.diaryapp.ui.MainActivity"
->
+        tools:context="com.plant.diaryapp.ui.MainActivity">
 
     <com.bilibili.magicasakura.widgets.TintAppBarLayout
             android:layout_width="match_parent"

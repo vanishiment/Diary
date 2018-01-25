@@ -4,8 +4,6 @@ package com.plant.diaryapp.data.remote;
 import com.plant.diaryapp.data.datasource.DiaryBookDataSource;
 import com.plant.diaryapp.data.model.DiaryBook;
 
-import java.util.List;
-
 public class RemoteDiaryBookDataSource implements DiaryBookDataSource {
     @Override
     public void getYearDiaryBook(int year,LoadDiaryBooksCallback callback) {
@@ -26,12 +24,12 @@ public class RemoteDiaryBookDataSource implements DiaryBookDataSource {
     }
 
     @Override
-    public void updateDiaryBookColor(int year, int month, String color) {
+    public void updateDiaryBookColor(int year, int month, java.lang.String color) {
 
     }
 
     @Override
-    public void updateDiaryBookPic(int year, int month, String pic) {
+    public void updateDiaryBookPic(int year, int month, java.lang.String pic) {
 
     }
 

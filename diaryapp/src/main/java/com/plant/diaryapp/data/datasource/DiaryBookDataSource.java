@@ -27,9 +27,9 @@ public interface DiaryBookDataSource {
 
     void updateDiaryBook(DiaryBook diaryBook);
 
-    void updateDiaryBookColor(int year, int month, String color);
+    void updateDiaryBookColor(int year, int month, java.lang.String color);
 
-    void updateDiaryBookPic(int year, int month, String pic);
+    void updateDiaryBookPic(int year, int month, java.lang.String pic);
 
     void updateDiaryBookDiaryCount(int year, int month, int diaryCount);
 

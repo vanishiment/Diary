@@ -18,13 +18,21 @@ public class AppExecutors {
 
     private final Executor mainThread;
 
+    private static final class Holder{
+        static final AppExecutors APP_EXECUTORS = new AppExecutors();
+    }
+
+    public static AppExecutors get(){
+        return Holder.APP_EXECUTORS;
+    }
+
     private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
         this.diskIO = diskIO;
         this.networkIO = networkIO;
         this.mainThread = mainThread;
     }
 
-    public AppExecutors() {
+    private AppExecutors() {
         this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT),
                 new MainThreadExecutor());
     }

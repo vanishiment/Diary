@@ -13,15 +13,15 @@ public class DiaryBook {
     private int month;
 
     @ColumnInfo(name = "color")
-    private String color;
+    private java.lang.String color;
 
     @ColumnInfo(name = "cover_pic_url")
-    private String coverPicUrl;
+    private java.lang.String coverPicUrl;
 
     @ColumnInfo(name = "diary_count")
     private int diaryCount;
 
-    public DiaryBook(int year, int month, String color, String coverPicUrl, int diaryCount) {
+    public DiaryBook(int year, int month, java.lang.String color, java.lang.String coverPicUrl, int diaryCount) {
         this.year = year;
         this.month = month;
         this.color = color;
@@ -45,19 +45,19 @@ public class DiaryBook {
         this.month = month;
     }
 
-    public String getColor() {
+    public java.lang.String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(java.lang.String color) {
         this.color = color;
     }
 
-    public String getCoverPicUrl() {
+    public java.lang.String getCoverPicUrl() {
         return coverPicUrl;
     }
 
-    public void setCoverPicUrl(String coverPicUrl) {
+    public void setCoverPicUrl(java.lang.String coverPicUrl) {
         this.coverPicUrl = coverPicUrl;
     }
 

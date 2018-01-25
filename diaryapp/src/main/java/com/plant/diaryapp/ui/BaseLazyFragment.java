@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 public abstract class BaseLazyFragment extends Fragment {
 
-    private Context mContext;
+    Context mContext;
     private OnUpdateListener mListener;
 
     private boolean mIsUIPrepared = false;

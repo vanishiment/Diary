@@ -18,7 +18,7 @@
             android:singleLine="true"
             android:text="@string/theme_picker"
             android:textAlignment="viewStart"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/text_size_large"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -35,13 +35,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/pink" />
+                app:backgroundTint="@color/pink"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_purple"
@@ -50,13 +50,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/purple" />
+                app:backgroundTint="@color/purple"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_blue"
@@ -65,13 +65,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/blue" />
+                app:backgroundTint="@color/blue"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_green"
@@ -80,7 +80,7 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/green" />
+                app:backgroundTint="@color/green"/>
     </LinearLayout>
 
     <LinearLayout
@@ -98,13 +98,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/green_light" />
+                app:backgroundTint="@color/green_light"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_yellow"
@@ -113,13 +113,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/yellow" />
+                app:backgroundTint="@color/yellow"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_orange"
@@ -128,13 +128,13 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/orange" />
+                app:backgroundTint="@color/orange"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintImageView
                 android:id="@+id/theme_red"
@@ -143,7 +143,7 @@
                 android:background="@drawable/ic_card_48dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/selector_pick_item"
-                app:backgroundTint="@color/red" />
+                app:backgroundTint="@color/red"/>
     </LinearLayout>
 
     <LinearLayout
@@ -162,7 +162,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
         <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@android:id/button2"
@@ -172,7 +172,7 @@
                 android:layout_marginRight="@dimen/padding"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/cancel"
-                android:textColor="@color/selector_primary_click" />
+                android:textColor="@color/selector_primary_click"/>
 
         <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@android:id/button1"
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/confirm"
-                android:textColor="@color/selector_primary_click" />
+                android:textColor="@color/selector_primary_click"/>
     </LinearLayout>
 
 </LinearLayout>

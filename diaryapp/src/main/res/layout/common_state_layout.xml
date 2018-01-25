@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bilibili.magicasakura.widgets.TintRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/state_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/state_empty_tv"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:textSize="@dimen/text_size_large"
+            android:text="@string/state_empty"
+    />
+
+    <com.bilibili.magicasakura.widgets.TintButton
+            android:id="@+id/state_empty_btn"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:background="?android:selectableItemBackground"
+            android:maxLines="3"
+            android:textSize="@dimen/text_size_large"
+            android:text="@string/state_error"/>
+
+</com.bilibili.magicasakura.widgets.TintRelativeLayout>

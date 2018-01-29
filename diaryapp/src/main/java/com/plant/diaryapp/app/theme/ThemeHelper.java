@@ -8,16 +8,16 @@ public class ThemeHelper {
 
     private static final String CURRENT_THEME = "theme_current";
 
-    public static final int CARD_SAKURA = 0x1;
-    public static final int CARD_HOPE = 0x2;
-    public static final int CARD_STORM = 0x3;
-    public static final int CARD_WOOD = 0x4;
-    public static final int CARD_LIGHT = 0x5;
-    public static final int CARD_THUNDER = 0x6;
-    public static final int CARD_SAND = 0x7;
-    public static final int CARD_FIREY = 0x8;
+    static final int CARD_SAKURA = 0x1;
+    static final int CARD_HOPE = 0x2;
+    static final int CARD_STORM = 0x3;
+    static final int CARD_WOOD = 0x4;
+    static final int CARD_LIGHT = 0x5;
+    static final int CARD_THUNDER = 0x6;
+    static final int CARD_SAND = 0x7;
+    static final int CARD_FIREY = 0x8;
 
-    public static SharedPreferences getSharePreference(Context context) {
+    private static SharedPreferences getSharePreference(Context context) {
         return context.getSharedPreferences("multiple_theme", Context.MODE_PRIVATE);
     }
 

@@ -2,6 +2,7 @@ package com.plant.diaryapp.ui;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.view.WindowManager;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.plant.diaryapp.R;
+import com.plant.diaryapp.activity.HomeAct;
 import com.plant.diaryapp.app.theme.CardPickerDialog;
 import com.plant.diaryapp.app.theme.ThemeHelper;
 
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, HomeAct.class));
             return true;
         }
 

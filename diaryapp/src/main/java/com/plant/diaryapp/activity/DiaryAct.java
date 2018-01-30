@@ -1,7 +1,16 @@
 package com.plant.diaryapp.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.plant.diaryapp.R;
 
 
-public class DiaryAct extends AppCompatActivity {
+public class DiaryAct extends ToolbarAct {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.act_diary);
+    }
 }

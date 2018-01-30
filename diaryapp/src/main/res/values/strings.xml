@@ -29,4 +29,17 @@
     <string name="action_date">选择日期</string>
     <string name="action_search">搜索日记</string>
 
+    <string name="dialog_title">选择年份</string>
+    <string name="dialog_p_btn">确定</string>
+    <string name="dialog_n_btn">取消</string>
+    <string-array name="dialog_year">
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+    </string-array>
+
 </resources>

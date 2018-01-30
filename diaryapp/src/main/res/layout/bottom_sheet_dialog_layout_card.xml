@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="设置背景"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:id="@+id/bottom_sheet_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="取消"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="?android:attr/selectableItemBackground"/>
+
+  </RelativeLayout>
+
+  <Button
+      android:id="@+id/bottom_sheet_photos"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:text="相册"
+      android:gravity="center_vertical"
+      android:layout_marginRight="8dp"
+      android:paddingLeft="8dp"
+      android:layout_marginTop="4dp"
+      android:background="?android:attr/selectableItemBackground"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:text="颜色"
+      android:gravity="center_vertical"
+      android:layout_marginRight="8dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="4dp"/>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/bottom_sheet_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="180dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginLeft="8dp"/>
+
+
+
+</LinearLayout>

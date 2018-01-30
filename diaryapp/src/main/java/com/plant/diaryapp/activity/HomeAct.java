@@ -1,9 +1,12 @@
 package com.plant.diaryapp.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.plant.diaryapp.R;
 import com.plant.diaryapp.fragment.CardFragment;
 import com.plant.diaryapp.utils.DateUtil;
+import com.plant.diaryapp.widget.DatePickerDialog;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -22,9 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeAct extends AppCompatActivity implements View.OnClickListener{
+public class HomeAct extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateClickListener{
 
     private CircleImageView mLogo;
+    private TextView mTitle;
     private ViewPager mContainer;
     private FloatingActionButton mFab;
     private CardFragsAdapter mCardFragsAdapter;
@@ -35,6 +41,7 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_home);
         initViews();
+        setHomeTitle(String.valueOf(DateUtil.getCurYear()));
         setupViews(DateUtil.getCurYear());
     }
 
@@ -48,6 +55,7 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener{
             actionBar.setDisplayShowTitleEnabled(false);
         }
         mLogo = findViewById(R.id.home_logo);
+        mTitle = findViewById(R.id.home_title);
         mContainer = findViewById(R.id.home_view_pager);
         mFab = findViewById(R.id.home_fab);
 
@@ -76,8 +84,10 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_date){
+            show(getSupportFragmentManager());
             return true;
         }else if (item.getItemId() == R.id.action_search){
+            launchAct(SearchAct.class);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -86,9 +96,50 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.home_logo){
-
+            launchAct(SettingsAct.class);
         }else if (v.getId() == R.id.home_fab){
+            launchAct(EditAct.class);
+        }
+    }
 
+    private void launchAct(Class<? extends Activity> clz){
+        Intent intent = new Intent(this,clz);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(String item) {
+        dismiss(getSupportFragmentManager());
+        setHomeTitle(item);
+        setupViews(Integer.parseInt(item));
+    }
+
+    private void setHomeTitle(String title){
+        String appName = getResources().getString(R.string.app_name);
+        mTitle.setText(String.format("%s·%s", appName, title));
+    }
+
+    private void resetData(int year){
+        if (mFragmentList == null){
+            mFragmentList = new ArrayList<>(12);
+        }
+        mFragmentList.clear();
+        mCardFragsAdapter.notifyDataSetChanged();
+        for (int i = 1; i <= 12; i++) {
+            mFragmentList.add(CardFragment.newIns(year,i));
+        }
+        mCardFragsAdapter.notifyDataSetChanged();
+    }
+
+    public void show(FragmentManager fm){
+        DatePickerDialog dialog = new DatePickerDialog();
+        dialog.show(fm,"DatePickerDialog");
+    }
+
+    public void dismiss(FragmentManager fm){
+        DatePickerDialog dialog = (DatePickerDialog) fm.findFragmentByTag("DatePickerDialog");
+        if (dialog != null){
+            dialog.dismiss();
         }
     }
 }

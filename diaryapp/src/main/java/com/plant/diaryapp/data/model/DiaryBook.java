@@ -2,6 +2,7 @@ package com.plant.diaryapp.data.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 
 @Entity(tableName = "diary_book_table",primaryKeys = {"year","month"})
 public class DiaryBook {
@@ -20,6 +21,10 @@ public class DiaryBook {
 
     @ColumnInfo(name = "diary_count")
     private int diaryCount;
+
+    @Ignore
+    public DiaryBook() {
+    }
 
     public DiaryBook(int year, int month, java.lang.String color, java.lang.String coverPicUrl, int diaryCount) {
         this.year = year;

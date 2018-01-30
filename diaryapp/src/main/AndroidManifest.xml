@@ -24,6 +24,24 @@
                   android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.DiaryListAct"
                   android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.DiaryAct"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.EditAct"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.SearchAct"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.SettingsAct"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="com.plant.diaryapp.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths_public" />
+        </provider>
     </application>
 
 </manifest>

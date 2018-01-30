@@ -46,7 +46,6 @@ public class LocalDiaryBookDataSource implements DiaryBookDataSource {
 
     @Override
     public void getMonthDiaryBook(int year, int month, GetDiaryBookCallback callback) {
-        mDiaryBookDao.getMonthDiaryBook(year, month);
         Runnable runnable = () -> {
             DiaryBook diaryBook = mDiaryBookDao.getMonthDiaryBook(year, month);
             mAppExecutors.mainThread().execute(() -> {

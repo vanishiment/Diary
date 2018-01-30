@@ -9,8 +9,11 @@ import android.support.annotation.ColorRes;
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.plant.diaryapp.app.theme.ThemeHelper;
 import com.plant.diaryapp.app.theme.ThemeUtil;
+import com.plant.diaryapp.data.local.DiaryDb;
 
 public class DiaryApp extends Application implements ThemeUtils.switchColor {
+
+    private static DiaryDb mDiaryDb;
 
     @Override
     public void onCreate() {
@@ -18,6 +21,12 @@ public class DiaryApp extends Application implements ThemeUtils.switchColor {
 
         // 主题切换
         ThemeUtils.setSwitchColor(this);
+
+        mDiaryDb = DiaryDb.get(this);
+    }
+
+    public static DiaryDb getDiaryDb() {
+        return mDiaryDb;
     }
 
     @Override

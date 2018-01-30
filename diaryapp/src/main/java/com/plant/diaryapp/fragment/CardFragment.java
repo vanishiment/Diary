@@ -1,6 +1,7 @@
 package com.plant.diaryapp.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.plant.diaryapp.R;
+import com.plant.diaryapp.activity.DiaryListAct;
 import com.plant.diaryapp.app.DiaryApp;
 import com.plant.diaryapp.data.datasource.DiaryBookDataSource;
 import com.plant.diaryapp.data.local.LocalDiaryBookDataSource;
@@ -59,6 +62,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     private static final String MONTH = "month";
     private int mYear, mMonth;
 
+    private CardView mCardView;
     private ImageView mBg;
     private TextView mMonthNum, mMonthText, mPbText;
     private ProgressBar mPb;
@@ -101,6 +105,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View view) {
+        mCardView = view.findViewById(R.id.card_front_card_view);
+        mCardView.setOnClickListener(this);
         mBg = view.findViewById(R.id.card_front_bg_iv);
         mMonthNum = view.findViewById(R.id.card_front_month_number_tv);
         mMonthText = view.findViewById(R.id.card_front_month_text_tv);
@@ -191,7 +197,16 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.card_front_more_ibtn) {
             showColorOrImgPicker();
+        }else if (v.getId() == R.id.card_front_card_view){
+            launchAct(DiaryListAct.class);
         }
+    }
+
+    public void launchAct(Class<? extends Activity> clz){
+        Intent intent = new Intent(getActivity(),clz);
+        intent.putExtra(DiaryListAct.YEAR,mYear);
+        intent.putExtra(DiaryListAct.MONTH,mMonth);
+        getActivity().startActivity(intent);
     }
 
     private void showColorOrImgPicker() {

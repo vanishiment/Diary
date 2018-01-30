@@ -17,4 +17,9 @@ public class DiaryAct extends ToolbarAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_diary);
     }
+
+    @Override
+    public boolean canBack() {
+        return true;
+    }
 }

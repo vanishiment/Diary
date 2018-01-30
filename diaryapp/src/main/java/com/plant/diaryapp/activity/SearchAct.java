@@ -13,4 +13,8 @@ public class SearchAct extends ToolbarAct {
         setContentView(R.layout.act_search);
     }
 
+    @Override
+    public boolean canBack() {
+        return true;
+    }
 }

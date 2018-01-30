@@ -12,4 +12,9 @@ public class EditAct extends ToolbarAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_edit);
     }
+
+    @Override
+    public boolean canBack() {
+        return true;
+    }
 }

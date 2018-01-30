@@ -12,4 +12,9 @@ public class SettingsAct extends ToolbarAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_settings);
     }
+
+    @Override
+    public boolean canBack() {
+        return true;
+    }
 }

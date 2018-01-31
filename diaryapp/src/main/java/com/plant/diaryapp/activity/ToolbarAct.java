@@ -20,7 +20,9 @@ public class ToolbarAct extends AppCompatActivity {
 
         if (mToolbar != null){
             setSupportActionBar(mToolbar);
-            mToolbar.setNavigationOnClickListener(v -> onBackPressed());
+            if (canBackPressed()){
+                mToolbar.setNavigationOnClickListener(v -> onBackPressed());
+            }
 
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null){
@@ -34,6 +36,10 @@ public class ToolbarAct extends AppCompatActivity {
 
     public boolean canBack(){
         return false;
+    }
+
+    public boolean canBackPressed(){
+        return true;
     }
 
     public void setDisplayShowTitleEnabled(boolean show){

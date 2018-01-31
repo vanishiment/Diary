@@ -17,7 +17,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.plant.diaryapp.R;
+import com.plant.diaryapp.app.DiaryApp;
+import com.plant.diaryapp.data.local.LocalDiaryDataSource;
+import com.plant.diaryapp.data.model.Diary;
+import com.plant.diaryapp.data.remote.RemoteDiaryDataSource;
+import com.plant.diaryapp.data.repo.DiaryRepo;
 import com.plant.diaryapp.fragment.CardFragment;
+import com.plant.diaryapp.utils.AppExecutors;
 import com.plant.diaryapp.utils.DateUtil;
 import com.plant.diaryapp.widget.DatePickerDialog;
 
@@ -98,8 +104,37 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
         if (v.getId() == R.id.home_logo){
             launchAct(SettingsAct.class);
         }else if (v.getId() == R.id.home_fab){
-            launchAct(EditAct.class);
+//            addDiary();
+            Intent intent = new Intent(this,EditAct.class);
+            intent.putExtra(EditAct.YEAR,DateUtil.getCurYear());
+            intent.putExtra(EditAct.MONTH,DateUtil.getCurMonth());
+            intent.putExtra(EditAct.DAY,DateUtil.getCurDay());
+            startActivity(intent);
         }
+    }
+
+    private void addDiary(){
+        LocalDiaryDataSource local = LocalDiaryDataSource.getSource(DiaryApp.getDiaryDb().mDiaryDao(), AppExecutors.get());
+        DiaryRepo repo = DiaryRepo.getRepo(local,new RemoteDiaryDataSource());
+        Diary diary = new Diary();
+        diary.setYear(2018);
+        diary.setMonth(1);
+        diary.setDay(31);
+        diary.setWeek(3);
+        diary.setWeather("Snow");
+        diary.setTitle("白雪皑皑");
+        diary.setContent("今天下雪了！");
+        repo.insertDiary(diary);
+
+        Diary diary1 = new Diary();
+        diary1.setYear(2018);
+        diary1.setMonth(1);
+        diary1.setDay(30);
+        diary1.setWeek(2);
+        diary1.setWeather("Snow");
+        diary1.setTitle("白雪皑皑");
+        diary1.setContent("今天下雪了！");
+        repo.insertDiary(diary1);
     }
 
     private void launchAct(Class<? extends Activity> clz){

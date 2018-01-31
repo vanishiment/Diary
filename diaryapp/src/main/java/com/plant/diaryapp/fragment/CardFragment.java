@@ -119,7 +119,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     private void setupView(int year, int month) {
         mMonthNum.setText(String.valueOf(month));
         mMonthText.setText(Utils.getMonthText(month));
-        mPbText.setText(String.format(Locale.getDefault(), "0/%d", DateUtil.getMonthDays(year, month, 1)));
+        mPbText.setText(String.format(Locale.getDefault(), "0/%d", DateUtil.getMonthDays(year, month-1, 1)));
         mPb.setProgress(0);
 
         mBook.setYear(mYear);

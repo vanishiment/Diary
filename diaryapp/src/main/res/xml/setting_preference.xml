@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="@string/settings_settings">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="get_msg"
+        android:summary="@string/settings_get_msg_desc"
+        android:title="@string/settings_get_msg" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="night_model"
+        android:title="@string/settings_night_model" />
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/time_of_saving_articles"
+        android:entryValues="@array/time_of_saving_articles_item"
+        android:key="time_of_saving_articles"
+        android:summary="%s"
+        android:title="@string/settings_theme" />
+
+    <Preference
+        android:key="download_diary"
+        android:title="@string/settings_download_diary" />
+
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/settings_about">
+
+    <Preference android:title="@string/settings_app_version" />
+
+    <Preference
+        android:key="rate"
+        android:summary="@string/settings_rate_desc"
+        android:title="@string/settings_rate" />
+
+    <Preference
+        android:key="author"
+        android:summary="@string/settings_author_desc"
+        android:title="@string/settings_author" />
+
+    <Preference
+        android:key="feedback"
+        android:summary="@string/settings_feed_back_desc"
+        android:title="@string/settings_feed_back" />
+  </PreferenceCategory>
+
+
+  <PreferenceCategory android:title="@string/settings_support">
+
+    <Preference
+        android:key="coffee"
+        android:summary="@string/settings_coffee_desc"
+        android:title="@string/settings_coffee" />
+
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/settings_open_source">
+
+    <Preference
+        android:key="open_source_license"
+        android:title="@string/settings_open_source" />
+
+  </PreferenceCategory>
+
+</PreferenceScreen>

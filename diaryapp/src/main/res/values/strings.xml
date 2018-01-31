@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DiaryApp</string>
+    <string name="app_settings">设置</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -67,4 +68,51 @@
         定态到另一个定态，才能吸收或辐射能量。这个理论虽然有许多成功之处，对于进一步解释实验现象还有许多困难。
         在人们认识到光具有波动和微粒的二象性之后，为了解释一些经典理论无法解释的现象，法国物理学家德布罗意于1923年提出了物质波这一概念。认为一切微观粒子均伴随着一个波，这就是所谓的德布罗意波。</string>
 
+    <string name="settings_settings">设置</string>
+    <string name="settings_get_msg">开启动画</string>
+    <string name="settings_get_msg_desc">开启动画后可能会造成卡顿，请谨慎开启</string>
+    <string name="settings_night_model">夜间模式</string>
+    <string name="settings_theme">主题</string>
+    <string name="settings_download_diary">导出日记</string>
+
+    <string name="settings_about">关于</string>
+    <string name="settings_app_version">版本：v0.0.1</string>
+    <string name="settings_rate">在 App 商店评价</string>
+    <string name="settings_rate_desc">请给我好评吧:-D</string>
+    <string name="settings_author">作者</string>
+    <string name="settings_author_desc">Plant</string>
+    <string name="settings_feed_back">意见或建议</string>
+    <string name="settings_feed_back_desc">不好用？请点此处反馈</string>
+
+    <string name="settings_support">支持</string>
+    <string name="settings_coffee">赞助</string>
+    <string name="settings_coffee_desc">对您很有帮助？请点击此处捐赠</string>
+    <string name="settings_open_source">感谢的开源项目</string>
+
+    <string name="sendto">mailto:marktonymengyi@gmail.com</string>
+    <string name="mail_topic">PaperPlane Feedback / Advice</string>
+    <string name="device_model">Device Version:</string>
+    <string name="sdk_version">SDK Version:</string>
+    <string name="no_mail_app">No email app found</string>
+    <string name="coffee">Buy Me A Cup of Coffee</string>
+    <string name="coffee_description">If you think I deserve to get paid for my work, buy me a cup of coffee for support</string>
+    <string name="donate">Donate Developer</string>
+    <string name="donate_content">Alipay account will be copied to clipboard.Launch Alipay and paste it to finish donating.Thanks for support!</string>
+    <string name="donate_account">marktonymengyi@gmail.com</string>
+    <string name="positive">OK</string>
+    <string name="negative">Cancel</string>
+
+    <string-array name="time_of_saving_articles">
+        <item>1 day</item>
+        <item>5 days</item>
+        <item>15 days</item>
+        <item>30 days</item>
+    </string-array>
+
+    <string-array name="time_of_saving_articles_item">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

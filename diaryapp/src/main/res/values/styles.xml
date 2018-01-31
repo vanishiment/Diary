@@ -13,7 +13,7 @@
         <item name="colorControlActivated">@color/theme_color_primary</item>
         <item name="colorControlHighlight">@color/gray_trans</item>
         <item name="colorControlNormal">@android:color/white</item>
-
+        <item name="preferenceTheme">@style/AppTheme.NoActionBar.Preference</item>
     </style>
 
     <style name="AppTheme" parent="BaseTheme">
@@ -39,6 +39,16 @@
         <item name="android:windowMinWidthMinor">90%</item>
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:maxWidth">1080dp</item>
+    </style>
+
+    <style name="WindowAnimationFadeInOut">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Preference" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

@@ -203,9 +203,9 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
 
     private void editCancel() {
         boolean checkDiary = mDiary.equals(mDiaryCopy);
-        if (!checkDiary){
+        if (!checkDiary) {
             showTipDialog(getSupportFragmentManager());
-        }else {
+        } else {
             finish();
         }
     }

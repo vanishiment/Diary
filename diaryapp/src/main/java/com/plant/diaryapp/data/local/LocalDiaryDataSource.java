@@ -60,6 +60,21 @@ public class LocalDiaryDataSource implements DiaryDataSource {
     }
 
     @Override
+    public void queryDiary(String query, LoadDiaryListCallback callback) {
+        Runnable runnable = () -> {
+            List<Diary> diaryList = mDiaryDao.queryDiary("%" + query + "%");
+            mAppExecutors.mainThread().execute(() -> {
+                if (diaryList.isEmpty()){
+                    callback.onDataNotAvailable();
+                }else {
+                    callback.onDiaryListLoaded(diaryList);
+                }
+            });
+        };
+        mAppExecutors.diskIO().execute(runnable);
+    }
+
+    @Override
     public void insertDiary(Diary diary) {
         Runnable insert = () -> {
             mDiaryDao.insertDiary(diary);

@@ -23,6 +23,8 @@ public interface DiaryDataSource {
 
     void getDiary(int year, int month, int day,GetDiaryCallback callback);
 
+    void queryDiary(String query,LoadDiaryListCallback callback);
+
     void insertDiary(Diary diary);
 
     void updateDiary(Diary diary);

@@ -19,6 +19,9 @@ public interface DiaryDao {
     @Query("select * from diary_table where year = :year and month = :month and day = :day")
     Diary getDiary(int year,int month,int day);
 
+    @Query("select * from diary_table where title like :text or content like :text")
+    List<Diary> queryDiary(String text);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDiary(Diary diary);
 

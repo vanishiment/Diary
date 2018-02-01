@@ -95,7 +95,7 @@ public class DiaryListAct extends ToolbarAct {
             @Override
             public void onDiaryListLoaded(List<Diary> diaryList) {
                 if (mDiaryListAdapter != null){
-                    mDiaryListAdapter.replaceData(diaryList);
+                    mDiaryListAdapter.replaceData(diaryList,false);
                 }
             }
 
@@ -109,7 +109,7 @@ public class DiaryListAct extends ToolbarAct {
         });
     }
 
-    private static class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.VH>{
+    public static class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.VH>{
 
         private Context mContext;
         private List<Diary> mDiaryList;
@@ -157,7 +157,13 @@ public class DiaryListAct extends ToolbarAct {
             return mDiaryList == null ? 0 : mDiaryList.size();
         }
 
-        void replaceData(List<Diary> list){
+        void replaceData(List<Diary> list,boolean forceRefresh){
+            if (forceRefresh){
+                if (list == null || list.isEmpty()){
+                    mDiaryList.clear();
+                    notifyDataSetChanged();
+                }
+            }
             if (list == null || list.isEmpty()) {
                 return;
             }

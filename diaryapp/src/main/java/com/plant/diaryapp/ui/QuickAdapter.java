@@ -88,7 +88,7 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         }
     }
 
-    static class VH extends RecyclerView.ViewHolder {
+    public static class VH extends RecyclerView.ViewHolder {
 
         private SparseArray<View> mViews;
         private View mContentView;

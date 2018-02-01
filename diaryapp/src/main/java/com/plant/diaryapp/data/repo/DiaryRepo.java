@@ -39,6 +39,11 @@ public class DiaryRepo implements DiaryDataSource{
     }
 
     @Override
+    public void queryDiary(String query, LoadDiaryListCallback callback) {
+        mLocal.queryDiary(query, callback);
+    }
+
+    @Override
     public void insertDiary(Diary diary) {
         mLocal.insertDiary(diary);
     }

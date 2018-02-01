@@ -115,4 +115,6 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string name="search_hint">搜索日记</string>
 </resources>

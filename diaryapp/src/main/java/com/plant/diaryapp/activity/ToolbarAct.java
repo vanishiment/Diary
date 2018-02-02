@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.jaeger.library.StatusBarUtil;
 import com.plant.diaryapp.R;
 
 
@@ -16,6 +17,7 @@ public class ToolbarAct extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.blue_primary_dark));
         mToolbar = findViewById(R.id.toolbar);
 
         if (mToolbar != null){

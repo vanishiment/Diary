@@ -12,30 +12,29 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+            android:theme="@style/DiaryAppTheme"
             android:name=".app.DiaryApp">
         <activity
-                android:name=".ui.MainActivity"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:name=".activity.HomeAct"
+                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HomeAct"
+        <activity android:name=".ui.MainActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.DiaryListAct"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  />
         <activity android:name=".activity.DiaryAct"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  />
         <activity android:name=".activity.EditAct"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  />
         <activity android:name=".activity.SearchAct"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  />
         <activity android:name=".activity.SettingsAct"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  />
 
         <provider
                 android:name="android.support.v4.content.FileProvider"

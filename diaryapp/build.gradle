@@ -50,4 +50,5 @@ dependencies {
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'com.zhihu.android:matisse:0.4.3'
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
 }

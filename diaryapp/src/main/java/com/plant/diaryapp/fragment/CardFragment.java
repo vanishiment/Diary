@@ -33,10 +33,14 @@ import com.plant.diaryapp.R;
 import com.plant.diaryapp.activity.DiaryListAct;
 import com.plant.diaryapp.app.DiaryApp;
 import com.plant.diaryapp.data.datasource.DiaryBookDataSource;
+import com.plant.diaryapp.data.datasource.DiaryDataSource;
 import com.plant.diaryapp.data.local.LocalDiaryBookDataSource;
+import com.plant.diaryapp.data.local.LocalDiaryDataSource;
+import com.plant.diaryapp.data.model.Diary;
 import com.plant.diaryapp.data.model.DiaryBook;
 import com.plant.diaryapp.data.remote.RemoteDiaryDataSource;
 import com.plant.diaryapp.data.repo.DiaryBookRepo;
+import com.plant.diaryapp.data.repo.DiaryRepo;
 import com.plant.diaryapp.support.GlideEngineOverride;
 import com.plant.diaryapp.support.permission.MPermission;
 import com.plant.diaryapp.support.permission.callback.PermissionCallback;
@@ -71,6 +75,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
 
     private DiaryBook mBook = new DiaryBook();
 
+    private boolean mUIPrepared = false;
+
     public CardFragment() {
     }
 
@@ -101,7 +107,22 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         Log.e(TAG, "year: " + mYear + " month: " + mMonth);
         setupView(mYear, mMonth);
         loadData(mYear, mMonth);
+        mUIPrepared = true;
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && mUIPrepared && getUserVisibleHint()){
+            queryDiaryCount(mYear,mMonth);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUIPrepared = false;
     }
 
     private void initViews(View view) {
@@ -132,11 +153,12 @@ public class CardFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDiaryLoaded(DiaryBook diaryBook) {
                 setupViewWithDiaryBook(diaryBook);
+                queryDiaryCount(diaryBook.getYear(),diaryBook.getMonth());
             }
 
             @Override
             public void onDataNotAvailable() {
-
+                queryDiaryCount(year,month);
             }
         });
     }
@@ -148,11 +170,33 @@ public class CardFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDiaryLoaded(DiaryBook diaryBook1) {
                 repo.updateDiaryBook(diaryBook);
+                queryDiaryCount(diaryBook.getYear(),diaryBook.getMonth());
             }
 
             @Override
             public void onDataNotAvailable() {
                 repo.insertDiaryBook(diaryBook);
+                queryDiaryCount(diaryBook.getYear(),diaryBook.getMonth());
+            }
+        });
+    }
+
+    private void queryDiaryCount(int year,int month){
+        LocalDiaryDataSource local = LocalDiaryDataSource.getSource(DiaryApp.getDiaryDb().mDiaryDao(),AppExecutors.get());
+        DiaryRepo repo = DiaryRepo.getRepo(local,new RemoteDiaryDataSource());
+        repo.getMonthDiary(year, month, new DiaryDataSource.LoadDiaryListCallback() {
+            @Override
+            public void onDiaryListLoaded(List<Diary> diaryList) {
+                int progress = diaryList.size();
+                int max = DateUtil.getMonthDays(year, month-1, 1);
+                mPbText.setText(String.format(Locale.getDefault(), "%d/%d", progress,max));
+                mPb.setMax(max);
+                mPb.setProgress(progress);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
             }
         });
     }

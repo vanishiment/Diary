@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:contentDescription="@null"
-                android:background="@color/theme_color_primary"
+                android:background="@color/blue_half_primary"
         />
 
         <TextView
@@ -65,10 +65,12 @@
         />
 
         <ProgressBar
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:id="@+id/card_front_pb"
                 android:layout_width="180dp"
                 android:layout_height="2dp"
+                android:background="@color/blue_half_trans"
+                android:progressDrawable="@android:color/white"
                 android:layout_toLeftOf="@id/card_front_more_ibtn"
                 android:layout_toStartOf="@id/card_front_more_ibtn"
                 android:layout_alignParentLeft="true"
@@ -80,7 +82,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="16dp"
                 android:max="32"
-                android:progress="0"/>
+                android:progress="12"/>
 
         <TextView
                 android:id="@+id/card_front_pb_tv"

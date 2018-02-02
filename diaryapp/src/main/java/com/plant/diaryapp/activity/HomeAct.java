@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.plant.diaryapp.R;
 import com.plant.diaryapp.app.DiaryApp;
 import com.plant.diaryapp.data.local.LocalDiaryDataSource;
@@ -46,6 +47,7 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_home);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.blue_primary_dark));
         initViews();
         setHomeTitle(String.valueOf(DateUtil.getCurYear()));
         setupViews(DateUtil.getCurYear());

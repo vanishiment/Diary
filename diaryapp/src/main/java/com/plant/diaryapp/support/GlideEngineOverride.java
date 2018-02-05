@@ -11,69 +11,64 @@ import com.bumptech.glide.request.RequestOptions;
 import com.zhihu.matisse.engine.ImageEngine;
 
 public class GlideEngineOverride implements ImageEngine {
-  @Override
-  public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView,
-      Uri uri) {
-    RequestOptions options = RequestOptions
+    @Override
+    public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView,
+                              Uri uri) {
+        RequestOptions options = RequestOptions
+                .placeholderOf(placeholder)
+                .override(resize, resize)
+                .centerCrop();
 
-        .placeholderOf(placeholder)
-        .override(resize,resize)
-        .centerCrop();
+        Glide.with(context)
+                .load(uri)
+                .apply(options)
+                .into(imageView);
 
-    Glide.with(context)
-        .load(uri)
+    }
 
-        .apply(options)
-        .into(imageView);
+    @Override
+    public void loadAnimatedGifThumbnail(Context context, int resize, Drawable placeholder,
+                                         ImageView imageView, Uri uri) {
+        RequestOptions options = RequestOptions
+                .placeholderOf(placeholder)
+                .override(resize, resize)
+                .centerCrop();
 
-  }
+        Glide.with(context)
+                .load(uri)
+                .apply(options)
+                .into(imageView);
+    }
 
-  @Override public void loadAnimatedGifThumbnail(Context context, int resize, Drawable placeholder,
-      ImageView imageView, Uri uri) {
-    RequestOptions options = RequestOptions
+    @Override
+    public void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
+        RequestOptions options = RequestOptions
+                .priorityOf(Priority.HIGH)
+                .override(resizeX, resizeY)
+                .centerCrop();
 
-        .placeholderOf(placeholder)
-        .override(resize,resize)
-        .centerCrop();
+        Glide.with(context)
+                .load(uri)
+                .apply(options)
+                .into(imageView);
+    }
 
-    Glide.with(context)
-        .load(uri)
+    @Override
+    public void loadAnimatedGifImage(Context context, int resizeX, int resizeY, ImageView imageView,
+                                     Uri uri) {
+        RequestOptions options = RequestOptions
+                .priorityOf(Priority.HIGH)
+                .override(resizeX, resizeY)
+                .centerCrop();
 
-        .apply(options)
-        .into(imageView);
-  }
+        Glide.with(context)
+                .load(uri)
+                .apply(options)
+                .into(imageView);
+    }
 
-  @Override
-  public void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
-    RequestOptions options = RequestOptions
-
-        .priorityOf(Priority.HIGH)
-        .override(resizeX,resizeY)
-        .centerCrop();
-
-    Glide.with(context)
-        .load(uri)
-
-        .apply(options)
-        .into(imageView);
-  }
-
-  @Override
-  public void loadAnimatedGifImage(Context context, int resizeX, int resizeY, ImageView imageView,
-      Uri uri) {
-    RequestOptions options = RequestOptions
-        .priorityOf(Priority.HIGH)
-        .override(resizeX,resizeY)
-        .centerCrop();
-
-    Glide.with(context)
-        .load(uri)
-
-        .apply(options)
-        .into(imageView);
-  }
-
-  @Override public boolean supportAnimatedGif() {
-    return true;
-  }
+    @Override
+    public boolean supportAnimatedGif() {
+        return true;
+    }
 }

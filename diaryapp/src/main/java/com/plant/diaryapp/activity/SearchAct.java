@@ -98,7 +98,7 @@ public class SearchAct extends ToolbarAct implements SearchView.OnQueryTextListe
 
     private void endLoading(){
         if (mSwipeRefreshLayout.isRefreshing()){
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mSwipeRefreshLayout.postDelayed(() -> mSwipeRefreshLayout.setRefreshing(false), 3000);
         }
         mSwipeRefreshLayout.setEnabled(false);
     }

@@ -11,6 +11,6 @@
     <color name="blue_divider">#BDBDBD</color>
     <color name="blue_window_background">#eaeaea</color>
 
-    <color name="blue_half_trans">#89FFFFFF</color>
+    <color name="blue_half_trans">#44FFFFFF</color>
     <color name="blue_half_primary">#892196F3</color>
 </resources>

@@ -34,6 +34,7 @@
     <string name="dialog_p_btn">确定</string>
     <string name="dialog_n_btn">取消</string>
     <string name="menu_edit_diary_done">保存日记</string>
+    <string name="menu_diary_edit">编辑</string>
     <string-array name="dialog_year">
         <item>2017</item>
         <item>2018</item>

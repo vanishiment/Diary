@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.jaeger.library.StatusBarUtil;
 import com.plant.diaryapp.R;
 import com.plant.diaryapp.app.DiaryApp;
+import com.plant.diaryapp.data.datasource.DiaryDataSource;
 import com.plant.diaryapp.data.local.LocalDiaryDataSource;
 import com.plant.diaryapp.data.model.Diary;
 import com.plant.diaryapp.data.remote.RemoteDiaryDataSource;
@@ -42,6 +43,9 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
     private FloatingActionButton mFab;
     private CardFragsAdapter mCardFragsAdapter;
     private List<Fragment> mFragmentList;
+
+    private boolean mToday = false;
+    private Diary mDiary;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +88,27 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        LocalDiaryDataSource local = LocalDiaryDataSource.getSource(DiaryApp.getDiaryDb().mDiaryDao(),AppExecutors.get());
+        DiaryRepo repo = DiaryRepo.getRepo(local,new RemoteDiaryDataSource());
+        repo.getDiary(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay(), new DiaryDataSource.GetDiaryCallback() {
+            @Override
+            public void onDiaryLoaded(Diary diary) {
+                mToday = true;
+                mDiary = diary;
+                mFab.setImageResource(R.drawable.ic_today_white_24dp);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mToday = false;
+                mFab.setImageResource(R.drawable.ic_add_white_24dp);
+            }
+        });
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu,menu);
         return true;
@@ -107,7 +132,15 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
             launchAct(SettingsAct.class);
         }else if (v.getId() == R.id.home_fab){
 //            addDiary();
-            Intent intent = new Intent(this,EditAct.class);
+            Intent intent;
+            if (mToday){
+                intent = new Intent(this,DiaryAct.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(DiaryAct.DIARY,mDiary);
+                intent.putExtras(bundle);
+            }else {
+                intent = new Intent(this,EditAct.class);
+            }
             intent.putExtra(EditAct.YEAR,DateUtil.getCurYear());
             intent.putExtra(EditAct.MONTH,DateUtil.getCurMonth());
             intent.putExtra(EditAct.DAY,DateUtil.getCurDay());

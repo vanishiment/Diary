@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,7 +75,7 @@ public class DiaryAct extends ToolbarAct {
                 mDate.setText(String.format(Locale.getDefault(),"%d/%d/%d", mDiary.getYear(), mDiary.getMonth(), mDiary.getDay()));
             }
             if (!TextUtils.isEmpty(mDiary.getPic())){
-            Glide.with(mIv).load(R.drawable.item_bg).into(mIv);
+            Glide.with(mIv).load(mDiary.getPic()).into(mIv);
             }
             if (!TextUtils.isEmpty(mDiary.getWeather())){
                 mWeather.setText(mDiary.getWeather());
@@ -92,5 +94,24 @@ public class DiaryAct extends ToolbarAct {
     @Override
     public boolean canBack() {
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_diary,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_diary_action_edit){
+            Intent intent = new Intent(this,EditAct.class);
+            intent.putExtra(EditAct.YEAR,mYear);
+            intent.putExtra(EditAct.MONTH,mMonth);
+            intent.putExtra(EditAct.DAY,mDay);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

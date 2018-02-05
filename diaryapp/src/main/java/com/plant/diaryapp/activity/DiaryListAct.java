@@ -134,9 +134,9 @@ public class DiaryListAct extends ToolbarAct {
             if (diary.getWeek() != 0){
                 holder.week.setText(String.valueOf(diary.getWeek()));
             }
-//            if (!TextUtils.isEmpty(diary.getPic())){
-                Glide.with(holder.background).load(R.drawable.item_bg).into(holder.background);
-//            }
+            if (!TextUtils.isEmpty(diary.getPic())){
+                Glide.with(holder.background).load(diary.getPic()).into(holder.background);
+            }
             int year = diary.getYear();
             int month = diary.getMonth();
             int day = diary.getDay();

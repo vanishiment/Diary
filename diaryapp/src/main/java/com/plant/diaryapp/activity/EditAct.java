@@ -192,18 +192,20 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
             @Override
             public void onDiaryLoaded(Diary diary) {
                 repo.updateDiary(mDiary);
+                EditAct.this.finish();
             }
 
             @Override
             public void onDataNotAvailable() {
                 repo.insertDiary(mDiary);
+                EditAct.this.finish();
             }
         });
     }
 
     private void editCancel() {
         boolean checkDiary = mDiary.equals(mDiaryCopy);
-        if (!checkDiary) {
+        if (!checkDiary && !TextUtils.isEmpty(mDiary.getTitle()) && !TextUtils.isEmpty(mDiary.getContent()) && !TextUtils.isEmpty(mDiary.getPic())) {
             showTipDialog(getSupportFragmentManager());
         } else {
             finish();

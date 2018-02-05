@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -341,7 +342,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onBindViewHolder(VH holder, int position) {
             final String color = mColorList[position];
-            holder.ivBtn.setImageDrawable(new ColorDrawable(Color.parseColor(color)));
+//            holder.ivBtn.setImageDrawable(new ColorDrawable(Color.parseColor(color)));
+            holder.ivBtn.setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
             holder.fl.setOnClickListener(v -> {
                 if (BottomSheetRVAdapter.this.onItemClickListener != null) {
                     BottomSheetRVAdapter.this.onItemClickListener.onItemClick(v, color);

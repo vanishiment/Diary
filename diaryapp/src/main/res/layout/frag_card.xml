@@ -65,12 +65,10 @@
         />
 
         <ProgressBar
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                style="@style/DiaryAppTheme.ProgressBarH"
                 android:id="@+id/card_front_pb"
                 android:layout_width="180dp"
                 android:layout_height="2dp"
-                android:background="@color/blue_half_trans"
-                android:progressDrawable="@android:color/white"
                 android:layout_toLeftOf="@id/card_front_more_ibtn"
                 android:layout_toStartOf="@id/card_front_more_ibtn"
                 android:layout_alignParentLeft="true"

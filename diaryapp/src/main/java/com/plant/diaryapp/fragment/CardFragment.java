@@ -207,7 +207,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         if (mYear != diaryBook.getYear()) return;
         if (mMonth != diaryBook.getMonth()) return;
 
-        mMonthNum.setText(String.valueOf(mYear));
+        mMonthNum.setText(String.valueOf(mMonth));
         mMonthText.setText(Utils.getMonthText(mMonth));
 
         mBook.setYear(mYear);

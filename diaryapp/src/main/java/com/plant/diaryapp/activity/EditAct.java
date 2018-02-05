@@ -26,7 +26,6 @@ import com.plant.diaryapp.data.local.LocalDiaryDataSource;
 import com.plant.diaryapp.data.model.Diary;
 import com.plant.diaryapp.data.remote.RemoteDiaryDataSource;
 import com.plant.diaryapp.data.repo.DiaryRepo;
-import com.plant.diaryapp.fragment.CardFragment;
 import com.plant.diaryapp.support.GlideEngineOverride;
 import com.plant.diaryapp.support.permission.MPermission;
 import com.plant.diaryapp.support.permission.callback.PermissionCallback;
@@ -144,6 +143,12 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
         if (!TextUtils.isEmpty(content)) {
             mContent.setText(content);
         }
+        String weather = diary.getWeather();
+        if (!TextUtils.isEmpty(weather)){
+            mWeather.setText(weather);
+        }else {
+            mWeather.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -185,6 +190,7 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
         } else {
             mDiary.setContent("");
         }
+        mDiary.setWeather("");
 
         LocalDiaryDataSource local = LocalDiaryDataSource.getSource(DiaryApp.getDiaryDb().mDiaryDao(), AppExecutors.get());
         DiaryRepo repo = DiaryRepo.getRepo(local, new RemoteDiaryDataSource());
@@ -192,15 +198,28 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
             @Override
             public void onDiaryLoaded(Diary diary) {
                 repo.updateDiary(mDiary);
+                launchDiaryAct();
                 EditAct.this.finish();
             }
 
             @Override
             public void onDataNotAvailable() {
                 repo.insertDiary(mDiary);
+                launchDiaryAct();
                 EditAct.this.finish();
             }
         });
+    }
+
+    private void launchDiaryAct(){
+        Intent result = new Intent(EditAct.this,DiaryAct.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(DiaryAct.DIARY,mDiary);
+        result.putExtras(bundle);
+        result.putExtra(DiaryAct.YEAR,mDiary.getYear());
+        result.putExtra(DiaryAct.MONTH,mDiary.getMonth());
+        result.putExtra(DiaryAct.DAY,mDiary.getDay());
+        startActivity(result);
     }
 
     private void editCancel() {
@@ -255,6 +274,7 @@ public class EditAct extends ToolbarAct implements EditImageLayout.OnEditImageLa
     @Override
     public void onDeleteClick(View view) {
         mEditImageLayout.setImageDrawable(null);
+        mDiary.setPic("");
     }
 
     @Override

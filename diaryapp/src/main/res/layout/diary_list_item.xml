@@ -48,6 +48,7 @@
 
         <ImageView
                 android:id="@+id/diary_list_bg"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/diary_list_item_desc"
@@ -56,6 +57,22 @@
                 android:layout_alignParentEnd="true"
                 android:scaleType="centerCrop"
                 android:contentDescription="@null"
-                android:src="@color/theme_color_primary"/>
+                android:src="@color/blue_half_primary"/>
+
+        <TextView
+                android:id="@+id/diary_list_text_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/diary_list_item_desc"
+                android:layout_toEndOf="@id/diary_list_item_desc"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:background="@color/blue_half_primary"
+                android:textStyle="bold|italic"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/blue_secondary_text"
+        />
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

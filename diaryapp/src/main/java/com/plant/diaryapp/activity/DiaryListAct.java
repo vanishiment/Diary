@@ -1,6 +1,7 @@
 package com.plant.diaryapp.activity;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.plant.diaryapp.data.repo.DiaryRepo;
 import com.plant.diaryapp.ui.StateLayout;
 import com.plant.diaryapp.ui.StateRecyclerView;
 import com.plant.diaryapp.utils.AppExecutors;
+import com.plant.diaryapp.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,10 +113,10 @@ public class DiaryListAct extends ToolbarAct {
 
     public static class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.VH>{
 
-        private Context mContext;
+        private Activity mContext;
         private List<Diary> mDiaryList;
 
-        DiaryListAdapter(Context context, List<Diary> diaryList) {
+        DiaryListAdapter(Activity context, List<Diary> diaryList) {
             mContext = context;
             mDiaryList = diaryList;
         }
@@ -131,11 +133,24 @@ public class DiaryListAct extends ToolbarAct {
             if (diary.getDay() != 0){
                 holder.day.setText(String.valueOf(diary.getDay()));
             }
-            if (diary.getWeek() != 0){
-                holder.week.setText(String.valueOf(diary.getWeek()));
-            }
+//            if (diary.getWeek() != 0){
+                holder.week.setText(DateUtil.getWeekDay(diary.getYear(),diary.getMonth(),diary.getDay()));
+//            }
             if (!TextUtils.isEmpty(diary.getPic())){
                 Glide.with(holder.background).load(diary.getPic()).into(holder.background);
+            }else {
+                holder.background.setVisibility(View.GONE);
+                holder.textBg.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(diary.getTitle())){
+                    holder.textBg.setText(diary.getTitle());
+                }else if (!TextUtils.isEmpty(diary.getContent())){
+                    String content = diary.getContent();
+                    if (content.length() > 15){
+                        content = content.substring(0,15);
+                    }
+                    holder.textBg.setText(content);
+                }
+
             }
             int year = diary.getYear();
             int month = diary.getMonth();
@@ -149,6 +164,7 @@ public class DiaryListAct extends ToolbarAct {
                 intent.putExtra(DiaryAct.MONTH,month);
                 intent.putExtra(DiaryAct.DAY,day);
                 mContext.startActivity(intent);
+                mContext.finish();
             });
         }
 
@@ -177,6 +193,7 @@ public class DiaryListAct extends ToolbarAct {
             CardView mCardView;
             TextView day,week;
             ImageView background;
+            TextView textBg;
 
             VH(View itemView) {
                 super(itemView);
@@ -184,6 +201,7 @@ public class DiaryListAct extends ToolbarAct {
                 day = itemView.findViewById(R.id.diary_list_day);
                 week = itemView.findViewById(R.id.diary_list_week);
                 background = itemView.findViewById(R.id.diary_list_bg);
+                textBg = itemView.findViewById(R.id.diary_list_text_bg);
             }
         }
     }

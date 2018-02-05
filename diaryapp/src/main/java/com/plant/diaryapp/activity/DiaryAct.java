@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -76,9 +77,13 @@ public class DiaryAct extends ToolbarAct {
             }
             if (!TextUtils.isEmpty(mDiary.getPic())){
             Glide.with(mIv).load(mDiary.getPic()).into(mIv);
+            }else {
+                mIv.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(mDiary.getWeather())){
                 mWeather.setText(mDiary.getWeather());
+            }else {
+                mWeather.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(mDiary.getTitle())){
                 mTitle.setText(mDiary.getTitle());
@@ -110,8 +115,10 @@ public class DiaryAct extends ToolbarAct {
             intent.putExtra(EditAct.MONTH,mMonth);
             intent.putExtra(EditAct.DAY,mDay);
             startActivity(intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

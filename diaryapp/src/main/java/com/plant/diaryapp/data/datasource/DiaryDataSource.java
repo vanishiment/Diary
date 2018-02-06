@@ -25,6 +25,8 @@ public interface DiaryDataSource {
 
     void queryDiary(String query,LoadDiaryListCallback callback);
 
+    void queryAllDiary(LoadDiaryListCallback callback);
+
     void insertDiary(Diary diary);
 
     void updateDiary(Diary diary);

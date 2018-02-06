@@ -22,6 +22,9 @@ public interface DiaryDao {
     @Query("select * from diary_table where title like :text or content like :text")
     List<Diary> queryDiary(String text);
 
+    @Query("select * from diary_table")
+    List<Diary> queryAllDiary();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDiary(Diary diary);
 

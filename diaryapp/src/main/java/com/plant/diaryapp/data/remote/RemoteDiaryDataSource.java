@@ -21,6 +21,11 @@ public class RemoteDiaryDataSource implements DiaryDataSource{
     }
 
     @Override
+    public void queryAllDiary(LoadDiaryListCallback callback) {
+
+    }
+
+    @Override
     public void insertDiary(Diary diary) {
 
     }

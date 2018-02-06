@@ -137,6 +137,8 @@ public class DiaryListAct extends ToolbarAct {
                 holder.week.setText(DateUtil.getWeekDay(diary.getYear(),diary.getMonth(),diary.getDay()));
 //            }
             if (!TextUtils.isEmpty(diary.getPic())){
+                holder.background.setVisibility(View.VISIBLE);
+                holder.textBg.setVisibility(View.GONE);
                 Glide.with(holder.background).load(diary.getPic()).into(holder.background);
             }else {
                 holder.background.setVisibility(View.GONE);

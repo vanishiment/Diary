@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="300dp"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:background="@android:color/white">
+
+    <TextView
+            android:id="@+id/file_export_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingStart="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/blue_primary_text"
+            android:text="@string/export_file_title"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+        <ProgressBar
+                style="?attr/progressBarStyle"
+                android:id="@+id/file_export_pb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        <TextView
+                android:id="@+id/file_export_success"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/text_primary_color"
+                android:text="@string/export_file_success"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+
+        <Button
+                style="?attr/buttonBarPositiveButtonStyle"
+                android:id="@+id/file_export_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/tip_dialog_done"/>
+
+        <Button
+                style="?attr/buttonBarNegativeButtonStyle"
+                android:id="@+id/file_export_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/file_export_done"
+                android:layout_toStartOf="@id/file_export_done"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/tip_dialog_cancel"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

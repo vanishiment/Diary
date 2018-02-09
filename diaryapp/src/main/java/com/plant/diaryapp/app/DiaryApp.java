@@ -3,13 +3,17 @@ package com.plant.diaryapp.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.plant.diaryapp.BuildConfig;
 import com.plant.diaryapp.app.theme.ThemeHelper;
 import com.plant.diaryapp.app.theme.ThemeUtil;
 import com.plant.diaryapp.data.local.DiaryDb;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.tendcloud.tenddata.TCAgent;
 
 public class DiaryApp extends Application implements ThemeUtils.switchColor {
 
@@ -18,6 +22,15 @@ public class DiaryApp extends Application implements ThemeUtils.switchColor {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //TalkingData 统计
+        if (BuildConfig.DEBUG){
+            TCAgent.LOG_ON = true;
+        }
+        TCAgent.init(this);
+
+        // Bugly 异常上报
+        CrashReport.initCrashReport(this,"738e341a8d",false);
 
         // 主题切换
         ThemeUtils.setSwitchColor(this);

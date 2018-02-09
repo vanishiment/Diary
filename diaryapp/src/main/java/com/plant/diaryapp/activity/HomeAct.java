@@ -28,6 +28,7 @@ import com.plant.diaryapp.fragment.CardFragment;
 import com.plant.diaryapp.utils.AppExecutors;
 import com.plant.diaryapp.utils.DateUtil;
 import com.plant.diaryapp.widget.DatePickerDialog;
+import com.tendcloud.tenddata.TCAgent;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -90,6 +91,7 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
     @Override
     protected void onResume() {
         super.onResume();
+        TCAgent.onPageStart(this,"Home");
         LocalDiaryDataSource local = LocalDiaryDataSource.getSource(DiaryApp.getDiaryDb().mDiaryDao(),AppExecutors.get());
         DiaryRepo repo = DiaryRepo.getRepo(local,new RemoteDiaryDataSource());
         repo.getDiary(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay(), new DiaryDataSource.GetDiaryCallback() {
@@ -106,6 +108,12 @@ public class HomeAct extends AppCompatActivity implements View.OnClickListener,D
                 mFab.setImageResource(R.drawable.ic_add_white_24dp);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgent.onPageEnd(this,"Home");
     }
 
     @Override

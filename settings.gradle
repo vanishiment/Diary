@@ -1,1 +1,1 @@
-include ':app', ':diaryapp'
+include ':app', ':diaryapp', ':statusbar'

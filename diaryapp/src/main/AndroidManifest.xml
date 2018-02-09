@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"  />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"  />
+    <uses-permission android:name="android.permission.GET_TASKS"  />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
             android:allowBackup="true"
@@ -45,6 +50,9 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/file_paths_public" />
         </provider>
+
+        <meta-data android:name="TD_APP_ID" android:value="28F65C699C2D422E8148C56BD48FCEDC" />
+        <meta-data android:name="TD_CHANNEL_ID" android:value="ying_yong_bao" />
     </application>
 
 </manifest>

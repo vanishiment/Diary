@@ -105,7 +105,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_card, container, false);
         initViews(view);
-        Log.e(TAG, "year: " + mYear + " month: " + mMonth);
+//        Log.e(TAG, "year: " + mYear + " month: " + mMonth);
         setupView(mYear, mMonth);
         loadData(mYear, mMonth);
         mUIPrepared = true;
@@ -116,8 +116,14 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && mUIPrepared && getUserVisibleHint()){
-            queryDiaryCount(mYear,mMonth);
+
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        queryDiaryCount(mYear,mMonth);
     }
 
     @Override

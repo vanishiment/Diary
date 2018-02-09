@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.jaeger.library.StatusBarUtil;
 import com.plant.diaryapp.R;
+import com.tendcloud.tenddata.TCAgent;
 
 
 public class ToolbarAct extends AppCompatActivity {
@@ -34,6 +35,18 @@ public class ToolbarAct extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TCAgent.onPageStart(this,"ToolbarAct");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgent.onPageEnd(this,"ToolbarAct");
     }
 
     public boolean canBack(){
